@@ -475,18 +475,19 @@ h2 em { font-style: italic; color: var(--text-2); }
   gap: 10px;
 }
 .exp-bullets li {
-  display: flex;
-  gap: 14px;
+  position: relative;
+  padding-left: 20px;
   color: var(--text-2);
   font-size: 14px;
   line-height: 1.75;
 }
 .exp-bullets li::before {
   content: '—';
+  position: absolute;
+  left: 0;
+  top: 0;
   color: var(--text-3);
-  flex-shrink: 0;
   font-size: 13px;
-  margin-top: 1px;
 }
 .exp-bullets li strong { color: var(--text); font-weight: 500; }
 
@@ -557,6 +558,177 @@ h2 em { font-style: italic; color: var(--text-2); }
   border-radius: 2px;
   padding: 2px 8px;
   letter-spacing: 0.04em;
+}
+
+/* ── BEYOND ── */
+.beyond-intro {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-style: italic;
+  color: var(--text-2);
+  margin-bottom: 56px;
+  max-width: 520px;
+}
+.hobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 72px;
+}
+.hobby-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+  transition: border-color 0.3s;
+}
+.hobby-card:hover { border-color: rgba(200,169,126,0.25); }
+.hobby-icon {
+  font-size: 20px;
+  color: var(--amber);
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+.hobby-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+.hobby-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.hobby-desc {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.8;
+}
+/* ── COLLECTION ── */
+.collection-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.collection-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.collection-count {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-2);
+}
+.collection-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.frag-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.frag-card {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.frag-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.frag-swatch {
+  height: 4px;
+  width: 100%;
+}
+.frag-body {
+  padding: 16px;
+  background: #111111;
+}
+.frag-house {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 5px;
+}
+.frag-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.frag-family-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 2px 7px;
+  margin-bottom: 12px;
+}
+.frag-notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.frag-notes-list span {
+  font-size: 10px;
+  color: var(--text-3);
+  border: 1px solid var(--text-3);
+  border-radius: 2px;
+  padding: 1px 6px;
+  letter-spacing: 0.03em;
+}
+/* family colors */
+.fam-fresh  .frag-swatch { background: linear-gradient(90deg, #4a8fa8, #2d6a8a); }
+.fam-fresh  .frag-family-badge { background: rgba(74,143,168,0.12); color: #7eb8d4; border: 1px solid rgba(74,143,168,0.2); }
+.fam-woody  .frag-swatch { background: linear-gradient(90deg, #c8a97e, #8c6840); }
+.fam-woody  .frag-family-badge { background: rgba(200,169,126,0.1); color: #c8a97e; border: 1px solid rgba(200,169,126,0.2); }
+.fam-oriental .frag-swatch { background: linear-gradient(90deg, #c87844, #8c4020); }
+.fam-oriental .frag-family-badge { background: rgba(200,120,68,0.1); color: #d4845a; border: 1px solid rgba(200,120,68,0.2); }
+.fam-oud    .frag-swatch { background: linear-gradient(90deg, #8c5030, #5c2a10); }
+.fam-oud    .frag-family-badge { background: rgba(140,80,48,0.12); color: #c0784e; border: 1px solid rgba(140,80,48,0.2); }
+.fam-leather .frag-swatch { background: linear-gradient(90deg, #7a5040, #503020); }
+.fam-leather .frag-family-badge { background: rgba(122,80,64,0.12); color: #b87850; border: 1px solid rgba(122,80,64,0.2); }
+.fam-floral .frag-swatch { background: linear-gradient(90deg, #b87898, #885060); }
+.fam-floral .frag-family-badge { background: rgba(184,120,152,0.1); color: #d4859e; border: 1px solid rgba(184,120,152,0.2); }
+
+@media (max-width: 1024px) { .frag-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) {
+  .hobby-grid { grid-template-columns: 1fr; }
+  .frag-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ── CONTACT ── */
@@ -679,6 +851,7 @@ footer .container {
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
+      <a href="#beyond">Beyond</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -722,7 +895,7 @@ footer .container {
         </div>
         <div class="stat-row">
           <span class="s-label">Efficiency gain at internship</span>
-          <span class="s-value">40–50 <span>%</span></span>
+          <span class="s-value">40–50%</span>
         </div>
         <div class="stat-row">
           <span class="s-label">Status</span>
@@ -1068,12 +1241,19 @@ footer .container {
           <div class="edu-bar-wrap">
             <div class="edu-bar" data-width="91.7"></div>
           </div>
+          <div class="aside-label" style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;">Completed</div>
+          <div class="edu-courses" style="margin-bottom:12px;">
+            <span>Real-Time Embedded Systems</span>
+            <span>Computer Systems Architecture</span>
+            <span>Intro to ML</span>
+            <span>Intro to Systems Engineering</span>
+            <span>Systems Optimization Methods</span>
+            <span>Big Data</span>
+          </div>
+          <div class="aside-label" style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);opacity:0.7;margin-bottom:8px;">Next semester</div>
           <div class="edu-courses">
-            <span>Machine Learning</span>
-            <span>Deep Learning</span>
-            <span>Artificial Intelligence</span>
-            <span>Data Structures</span>
-            <span>DBMS</span>
+            <span style="border-color:rgba(200,169,126,0.3);color:rgba(200,169,126,0.6);">Applied Matrix Methods</span>
+            <span style="border-color:rgba(200,169,126,0.3);color:rgba(200,169,126,0.6);">Deep Learning</span>
           </div>
         </div>
 
@@ -1097,6 +1277,44 @@ footer .container {
         </div>
 
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEYOND THE CODE -->
+<section id="beyond">
+  <div class="container">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="s-num">06</span>
+        <h2>Beyond the <em>code</em></h2>
+      </div>
+      <p class="beyond-intro reveal">Not everything about me fits in a résumé.</p>
+      <div class="hobby-grid">
+
+        <div class="hobby-card reveal">
+          <div class="hobby-icon">◈</div>
+          <div class="hobby-label">Collector</div>
+          <h3 class="hobby-title">Fraghead</h3>
+          <p class="hobby-desc">I collect and obsess over fragrances — the way a scent anchors a memory or shifts a mood fascinates me. It's an invisible art form, and I'm deep in it. From niche houses to iconic classics, the collection keeps growing.</p>
+          <div style="border-top:1px solid var(--border);margin-top:28px;padding-top:24px;">
+            <p style="font-size:12px;color:var(--text-2);margin-bottom:14px;letter-spacing:0.02em;">Curious what I'm wearing today?</p>
+            <button id="frag-btn" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--text-2);border:1px solid var(--border);border-radius:4px;padding:8px 16px;background:none;cursor:pointer;font-family:var(--font);letter-spacing:0.02em;transition:all 0.2s;">Reveal today's wear →</button>
+            <div id="frag-answer" style="margin-top:16px;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--text);opacity:0;transform:translateY(6px);transition:opacity 0.4s ease,transform 0.4s ease;min-height:28px;"></div>
+            <div id="frag-note" style="font-size:11px;color:var(--text-3);margin-top:5px;min-height:16px;"></div>
+          </div>
+        </div>
+
+        <div class="hobby-card reveal reveal-delay-2">
+          <div class="hobby-icon">◉</div>
+          <div class="hobby-label">Runner</div>
+          <h3 class="hobby-title">Fitness &amp; Running</h3>
+          <p class="hobby-desc">Running is my reset — where I process ideas, clear my head, and find a discipline that carries into everything else I do. Consistent movement keeps me sharp, both mentally and physically.</p>
+        </div>
+
+      </div>
+
+
     </div>
   </div>
 </section>
@@ -1162,6 +1380,55 @@ const barObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.3 });
 document.querySelectorAll('.edu-card').forEach(c => barObs.observe(c));
+
+/* Fragrance of the day */
+const frags = [
+  ['Armaf · Club de Nuit Thriller No.3',      'Bergamot · Cardamom · Vetiver · Sandalwood'],
+  ['Armaf · Club de Nuit Intense Man',         'Blackcurrant · Pineapple · Birch · Ambergris'],
+  ['Jean Paul Gaultier · Le Male Elixir',      'Lavender · Cardamom · Hawthorn · Amber'],
+  ['Jean Paul Gaultier · Le Beau Parfum',      'Bergamot · Coconut · Neroli · White Musk'],
+  ['Yves Saint Laurent · Y Intense',           'Bergamot · Ginger · Sage · Amberwood'],
+  ['Givenchy · Gentleman Réserve Privée',      'Iris · Patchouli · Leather · Cashmeran'],
+  ['Hermès · Terre d\'Hermès Vetiver',         'Vetiver · Orange · Flint · Cedarwood'],
+  ['Atkinsons · James',                        'Bergamot · Lavender · Cedarwood · Musk'],
+  ['Moncler · Collection Des Ambre',           'Labdanum · Amber · Sandalwood · White Musk'],
+  ['Parfums de Marly · Herod',                 'Tobacco · Vanilla · Patchouli · Cinnamon'],
+  ['Xerjoff · More Than Words',                'Rose · Bergamot · Oud · Sandalwood'],
+  ['Christian Dior · Sauvage',                 'Calabrian Bergamot · Pepper · Ambroxan'],
+  ['Hugo Boss · Bottled Beyond',               'Apple · Geranium · Birchwood · Vetiver'],
+  ['Thomas Kosmala · No.4 Orchid Oud',         'Oud · Orchid · Saffron · Rose · Amber'],
+  ['Thomas Kosmala · No.10 Accord Oud',        'Oud · Amber · Vanilla · Sandalwood'],
+  ['Tom Ford · Ombré Leather',                 'Cardamom · Jasmine · Leather · Amber'],
+  ['Viktor & Rolf · Spicebomb',                'Saffron · Cinnamon · Chili · Leather · Tobacco'],
+  ['Maison Margiela · Replica Jazz Club',      'Rum · Pink Pepper · Vetiver · Tonka Bean'],
+  ['Emporio Armani · Stronger With You Intensely', 'Chestnut · Lavender · Cardamom · Vanilla'],
+  ['Mancera · Instant Crush',                  'Rose · Oud · Iris · Amber · Musk'],
+  ['Amouroud · Nectar',                        'Rose · Ambergris · Oud · Iris · Sandalwood'],
+  ['Granado · Apothecário',                    'Vetiver · Cedar · Sandalwood · Amber'],
+  ['Arabiyat Prestige · Marwa',                'Rose · Oud · Amber · Musk · Sandalwood'],
+  ['Yves Saint Laurent · La Nuit de L\'Homme', 'Cardamom · Violet · Cedar · Vetiver'],
+  ['Paco Rabanne · Elixir Royal',              'Mandarin · Patchouli · Leather · Amber'],
+  ['Paco Rabanne · Fame',                      'Ylang-Ylang · Jasmine · Cashmeran · Oakmoss'],
+  ['Aesop · Aurner',                           'Sandalwood · Vetiver · Resin · Incense · Amber'],
+];
+const fragBtn = document.getElementById('frag-btn');
+const fragAnswer = document.getElementById('frag-answer');
+const fragNote = document.getElementById('frag-note');
+let lastIdx = -1;
+fragBtn.addEventListener('click', () => {
+  let idx;
+  do { idx = Math.floor(Math.random() * frags.length); } while (idx === lastIdx);
+  lastIdx = idx;
+  fragAnswer.style.opacity = '0';
+  fragAnswer.style.transform = 'translateY(6px)';
+  setTimeout(() => {
+    fragAnswer.textContent = frags[idx][0];
+    fragNote.textContent = frags[idx][1];
+    fragAnswer.style.opacity = '1';
+    fragAnswer.style.transform = 'translateY(0)';
+    fragBtn.textContent = 'Pick another →';
+  }, 180);
+});
 
 /* Active nav */
 const sections = document.querySelectorAll('section[id]');
