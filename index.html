@@ -731,6 +731,88 @@ h2 em { font-style: italic; color: var(--text-2); }
   .frag-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── RESUME ── */
+.resume-card {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 80px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 56px;
+  transition: border-color 0.3s;
+}
+.resume-card:hover { border-color: rgba(200,169,126,0.3); }
+.resume-name {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.resume-updated {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.resume-blurb {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.85;
+  max-width: 420px;
+  margin-bottom: 36px;
+}
+.resume-actions { display: flex; align-items: center; gap: 24px; }
+.resume-preview {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.rp-line { border-radius: 2px; background: rgba(255,255,255,0.07); width: 100%; }
+.rp-title  { height: 10px; width: 58%; background: rgba(255,255,255,0.14); }
+.rp-sub    { height: 6px;  width: 38%; }
+.rp-spacer { height: 10px; background: transparent; }
+.rp-h      { height: 7px;  width: 32%; background: rgba(200,169,126,0.22); }
+.rp-body   { height: 5px; }
+.rp-w90 { width: 90%; } .rp-w85 { width: 85%; }
+.rp-w80 { width: 80%; } .rp-w75 { width: 75%; }
+.rp-w70 { width: 70%; } .rp-w60 { width: 60%; }
+@media (max-width: 768px) {
+  .resume-card { grid-template-columns: 1fr; gap: 40px; padding: 32px; }
+  .resume-preview { display: none; }
+}
+
+/* ── CURSOR ── */
+#cursor-dot {
+  pointer-events: none;
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  transform: translate(-50%,-50%);
+  z-index: 9999;
+  transition: opacity 0.3s;
+  mix-blend-mode: normal;
+}
+#cursor-ring {
+  pointer-events: none;
+  position: fixed;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,126,0.35);
+  transform: translate(-50%,-50%);
+  z-index: 9998;
+  transition: width 0.25s, height 0.25s, border-color 0.25s, opacity 0.3s;
+}
+body:not(.cursor-ready) #cursor-dot,
+body:not(.cursor-ready) #cursor-ring { opacity: 0; }
+
 /* ── CONTACT ── */
 #contact {
   border-bottom: none;
@@ -842,6 +924,9 @@ footer .container {
 </head>
 <body>
 
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
 <header>
   <nav>
     <div class="nav-logo">Ninad<span>.</span></div>
@@ -851,6 +936,7 @@ footer .container {
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
+      <a href="#resume">Résumé</a>
       <a href="#beyond">Beyond</a>
       <a href="#contact">Contact</a>
     </div>
@@ -883,15 +969,15 @@ footer .container {
       <div class="hero-stats">
         <div class="stat-row">
           <span class="s-label">NYU GPA</span>
-          <span class="s-value">3.667 <span>/ 4.0</span></span>
+          <span class="s-value" data-count="3.667">3.667 <span>/ 4.0</span></span>
         </div>
         <div class="stat-row">
           <span class="s-label">Undergraduate CGPA</span>
-          <span class="s-value">8.97 <span>/ 10</span></span>
+          <span class="s-value" data-count="8.97">8.97 <span>/ 10</span></span>
         </div>
         <div class="stat-row">
           <span class="s-label">Projects shipped</span>
-          <span class="s-value">6+</span>
+          <span class="s-value" data-count="6">6 <span>+</span></span>
         </div>
         <div class="stat-row">
           <span class="s-label">Efficiency gain at internship</span>
@@ -1281,12 +1367,65 @@ footer .container {
   </div>
 </section>
 
+<!-- RESUME -->
+<section id="resume">
+  <div class="container">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="s-num">06</span>
+        <h2>My <em>résumé</em></h2>
+      </div>
+      <div class="reveal">
+        <div class="resume-card">
+          <div>
+            <div class="resume-name">Ninad Rade — Résumé</div>
+            <div class="resume-updated">Updated April 2025 · PDF · 1 page</div>
+            <p class="resume-blurb">
+              One page. Education, experience, projects, and skills — laid out cleanly.
+              Click to open it in a new tab, or download it directly.
+            </p>
+            <div class="resume-actions">
+              <a href="NinadRadeResume.pdf" target="_blank" rel="noopener" class="btn-primary">
+                View résumé
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+              </a>
+              <a href="NinadRadeResume.pdf" download class="btn-text">
+                Download PDF
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="resume-preview" aria-hidden="true">
+            <div class="rp-line rp-title"></div>
+            <div class="rp-line rp-sub"></div>
+            <div class="rp-line rp-spacer"></div>
+            <div class="rp-line rp-h"></div>
+            <div class="rp-line rp-body"></div>
+            <div class="rp-line rp-body rp-w85"></div>
+            <div class="rp-line rp-body rp-w70"></div>
+            <div class="rp-line rp-spacer"></div>
+            <div class="rp-line rp-h"></div>
+            <div class="rp-line rp-body rp-w90"></div>
+            <div class="rp-line rp-body rp-w75"></div>
+            <div class="rp-line rp-body rp-w80"></div>
+            <div class="rp-line rp-spacer"></div>
+            <div class="rp-line rp-h"></div>
+            <div class="rp-line rp-body rp-w85"></div>
+            <div class="rp-line rp-body rp-w60"></div>
+            <div class="rp-line rp-body rp-w90"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- BEYOND THE CODE -->
 <section id="beyond">
   <div class="container">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="s-num">06</span>
+        <span class="s-num">07</span>
         <h2>Beyond the <em>code</em></h2>
       </div>
       <p class="beyond-intro reveal">Not everything about me fits in a résumé.</p>
@@ -1429,6 +1568,57 @@ fragBtn.addEventListener('click', () => {
     fragBtn.textContent = 'Pick another →';
   }, 180);
 });
+
+/* Cursor follower */
+const dot  = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  document.body.classList.add('cursor-ready');
+});
+(function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a, button, .skill-chip, .tag, .frag-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width = '52px'; ring.style.height = '52px';
+    ring.style.borderColor = 'rgba(200,169,126,0.6)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '32px'; ring.style.height = '32px';
+    ring.style.borderColor = 'rgba(200,169,126,0.35)';
+  });
+});
+
+/* Animated stat counters */
+function animateCount(el, target, suffix, decimals) {
+  const duration = 1400;
+  const start = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = (target * ease).toFixed(decimals);
+    el.childNodes[0].textContent = val;
+    if (p < 1) requestAnimationFrame(tick);
+  })(start);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const raw = el.dataset.count;
+    if (!raw) return;
+    counterObs.unobserve(el);
+    const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
+    animateCount(el, parseFloat(raw), el.dataset.suffix || '', decimals);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.s-value[data-count]').forEach(el => counterObs.observe(el));
 
 /* Active nav */
 const sections = document.querySelectorAll('section[id]');
