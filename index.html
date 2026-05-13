@@ -18,6 +18,7 @@
   --text-2:   #777777;
   --text-3:   #3a3a3a;
   --amber:    #c8a97e;
+  --strava:   #FC4C02;
   --font:     'Inter', system-ui, sans-serif;
   --serif:    'EB Garamond', Georgia, serif;
 }
@@ -68,7 +69,7 @@ nav {
 .nav-logo span { color: var(--amber); }
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 28px;
 }
 .nav-links a {
   font-size: 13px;
@@ -110,7 +111,7 @@ nav {
 }
 #hero .container {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 1fr 380px;
   gap: 60px;
   align-items: end;
 }
@@ -183,19 +184,64 @@ h1 em {
 .btn-text svg { transition: transform 0.2s; }
 .btn-text:hover svg { transform: translateX(3px); }
 
+/* ── HERO PORTRAIT ── */
 .hero-right {
-  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: 0;
+}
+.hero-portrait {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center 15%;
+  filter: saturate(0.85) contrast(1.05);
+  transition: filter 0.4s;
+}
+.hero-portrait:hover img {
+  filter: saturate(1) contrast(1.02);
+}
+.hero-portrait-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 18px 16px;
+  background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.hero-portrait-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.hero-portrait-loc {
+  font-size: 11px;
+  color: var(--text-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .hero-stats {
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
   overflow: hidden;
 }
 .stat-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--border);
   transition: background 0.2s;
 }
@@ -208,7 +254,7 @@ h1 em {
 }
 .stat-row .s-value {
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 20px;
   color: var(--text);
 }
 .stat-row .s-value span {
@@ -312,6 +358,32 @@ h2 em { font-style: italic; color: var(--text-2); }
   box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
   flex-shrink: 0;
 }
+.about-photo {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background: var(--surface);
+}
+.about-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(0.9) contrast(1.02);
+}
+.about-photo-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-3);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
 /* ── SKILLS ── */
 #skills .skills-list {
@@ -347,6 +419,7 @@ h2 em { font-style: italic; color: var(--text-2); }
   border-radius: 3px;
   padding: 4px 12px;
   transition: all 0.2s;
+  cursor: default;
 }
 .skill-chip:hover {
   color: var(--text);
@@ -560,176 +633,100 @@ h2 em { font-style: italic; color: var(--text-2); }
   letter-spacing: 0.04em;
 }
 
-/* ── BEYOND ── */
-.beyond-intro {
-  font-family: var(--serif);
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-style: italic;
-  color: var(--text-2);
-  margin-bottom: 56px;
-  max-width: 520px;
-}
-.hobby-grid {
+/* ── CERTIFICATIONS ── */
+#certifications .certs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 72px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
-.hobby-card {
+.cert-card {
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 40px;
-  transition: border-color 0.3s;
-}
-.hobby-card:hover { border-color: rgba(200,169,126,0.25); }
-.hobby-icon {
-  font-size: 20px;
-  color: var(--amber);
-  margin-bottom: 20px;
-  opacity: 0.6;
-}
-.hobby-label {
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 10px;
-  opacity: 0.7;
-}
-.hobby-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.01em;
-  margin-bottom: 14px;
-}
-.hobby-desc {
-  color: var(--text-2);
-  font-size: 14px;
-  line-height: 1.8;
-}
-/* ── COLLECTION ── */
-.collection-header {
+  padding: 36px;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-}
-.collection-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.01em;
-}
-.collection-count {
-  font-family: var(--serif);
-  font-size: 13px;
-  font-style: italic;
-  color: var(--text-2);
-}
-.collection-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-2);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.legend-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.frag-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.frag-card {
-  border-radius: 8px;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   cursor: default;
+  transition: border-color 0.3s, transform 0.25s;
 }
-.frag-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255,255,255,0.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+.cert-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--amber), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-.frag-swatch {
-  height: 4px;
-  width: 100%;
+.cert-card:hover::before { opacity: 1; }
+.cert-card:hover {
+  border-color: rgba(200,169,126,0.3);
+  transform: translateY(-2px);
 }
-.frag-body {
-  padding: 16px;
-  background: #111111;
+.cert-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
 }
-.frag-house {
-  font-size: 9px;
+.cert-issuer {
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
-.frag-name {
-  font-size: 13px;
+.cert-name {
+  font-size: 19px;
   font-weight: 600;
   color: var(--text);
-  line-height: 1.3;
-  margin-bottom: 10px;
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
-.frag-family-badge {
-  display: inline-block;
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 2px;
-  padding: 2px 7px;
-  margin-bottom: 12px;
-}
-.frag-notes-list {
+.cert-icon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  background: var(--surface);
 }
-.frag-notes-list span {
+.cert-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.cert-year {
+  font-size: 12px;
+  color: var(--text-2);
+}
+.cert-badge {
   font-size: 10px;
-  color: var(--text-3);
-  border: 1px solid var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(200,169,126,0.3);
   border-radius: 2px;
-  padding: 1px 6px;
-  letter-spacing: 0.03em;
+  padding: 4px 10px;
 }
-/* family colors */
-.fam-fresh  .frag-swatch { background: linear-gradient(90deg, #4a8fa8, #2d6a8a); }
-.fam-fresh  .frag-family-badge { background: rgba(74,143,168,0.12); color: #7eb8d4; border: 1px solid rgba(74,143,168,0.2); }
-.fam-woody  .frag-swatch { background: linear-gradient(90deg, #c8a97e, #8c6840); }
-.fam-woody  .frag-family-badge { background: rgba(200,169,126,0.1); color: #c8a97e; border: 1px solid rgba(200,169,126,0.2); }
-.fam-oriental .frag-swatch { background: linear-gradient(90deg, #c87844, #8c4020); }
-.fam-oriental .frag-family-badge { background: rgba(200,120,68,0.1); color: #d4845a; border: 1px solid rgba(200,120,68,0.2); }
-.fam-oud    .frag-swatch { background: linear-gradient(90deg, #8c5030, #5c2a10); }
-.fam-oud    .frag-family-badge { background: rgba(140,80,48,0.12); color: #c0784e; border: 1px solid rgba(140,80,48,0.2); }
-.fam-leather .frag-swatch { background: linear-gradient(90deg, #7a5040, #503020); }
-.fam-leather .frag-family-badge { background: rgba(122,80,64,0.12); color: #b87850; border: 1px solid rgba(122,80,64,0.2); }
-.fam-floral .frag-swatch { background: linear-gradient(90deg, #b87898, #885060); }
-.fam-floral .frag-family-badge { background: rgba(184,120,152,0.1); color: #d4859e; border: 1px solid rgba(184,120,152,0.2); }
-
-@media (max-width: 1024px) { .frag-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) {
-  .hobby-grid { grid-template-columns: 1fr; }
-  .frag-grid { grid-template-columns: repeat(2, 1fr); }
+.cert-verify {
+  font-size: 11px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
 }
+.cert-verify:hover { color: var(--amber); }
 
 /* ── RESUME ── */
 .resume-card {
@@ -788,6 +785,267 @@ h2 em { font-style: italic; color: var(--text-2); }
   .resume-preview { display: none; }
 }
 
+/* ── BEYOND ── */
+.beyond-intro {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-style: italic;
+  color: var(--text-2);
+  margin-bottom: 56px;
+  max-width: 520px;
+}
+.hobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 72px;
+}
+.hobby-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+  transition: border-color 0.3s;
+}
+.hobby-card:hover { border-color: rgba(200,169,126,0.25); }
+.hobby-icon {
+  font-size: 20px;
+  color: var(--amber);
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+.hobby-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+  opacity: 0.7;
+}
+.hobby-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.hobby-desc {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.mini-interaction {
+  border-top: 1px solid var(--border);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+.mini-prompt {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.favorite-frags {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.favorite-frag {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 4px;
+}
+.favorite-frag:last-child {
+  padding-bottom: 0;
+}
+.favorite-frag:hover { background: rgba(255,255,255,0.015); }
+.favorite-frag-media {
+  height: 92px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #0f0f0f;
+  overflow: hidden;
+}
+.favorite-frag-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.favorite-frag-house {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.favorite-frag-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.frag-notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.frag-notes-list span {
+  font-size: 10px;
+  color: var(--text-3);
+  border: 1px solid var(--text-3);
+  border-radius: 2px;
+  padding: 1px 6px;
+  letter-spacing: 0.03em;
+}
+.favorite-frag-note {
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 8px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.3s;
+  opacity: 0;
+}
+.favorite-frag.expanded .favorite-frag-note {
+  max-height: 80px;
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .hobby-grid { grid-template-columns: 1fr; }
+}
+
+/* ── STRAVA WIDGET ── */
+.strava-widget {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 28px;
+  transition: border-color 0.3s;
+}
+.strava-widget:hover { border-color: rgba(252,76,2,0.25); }
+.strava-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(252,76,2,0.04);
+}
+.strava-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.strava-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--strava);
+  box-shadow: 0 0 0 3px rgba(252,76,2,0.15);
+  flex-shrink: 0;
+  animation: strava-pulse 2.4s ease-in-out infinite;
+}
+@keyframes strava-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(252,76,2,0.15); }
+  50% { box-shadow: 0 0 0 5px rgba(252,76,2,0.08); }
+}
+.strava-brand {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--strava);
+  font-weight: 600;
+}
+.strava-badge {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border: 1px solid var(--text-3);
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+.strava-body {
+  padding: 20px 18px 16px;
+}
+.strava-activity-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.strava-activity-type {
+  font-size: 11px;
+  color: var(--strava);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.strava-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.strava-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 0;
+}
+.strava-metric-val {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.strava-metric-unit {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 400;
+}
+.strava-metric-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.strava-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+}
+.strava-date {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+.strava-link {
+  font-size: 11px;
+  color: var(--strava);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity 0.2s;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.strava-link:hover { opacity: 0.75; }
 
 /* ── CONTACT ── */
 #contact {
@@ -880,8 +1138,8 @@ footer .container {
 @media (max-width: 768px) {
   .container { padding: 0 20px; }
   nav { padding: 0 20px; }
-  .nav-links { gap: 18px; }
-  .nav-links a { font-size: 12px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 11px; }
   #hero .container { grid-template-columns: 1fr; gap: 40px; }
   .hero-right { display: none; }
   #about .grid { grid-template-columns: 1fr; gap: 48px; }
@@ -891,6 +1149,7 @@ footer .container {
   .p-meta { text-align: left; }
   .exp-item { grid-template-columns: 1fr; gap: 20px; }
   #education .edu-grid { grid-template-columns: 1fr; }
+  #certifications .certs-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   footer .container { flex-direction: column; gap: 8px; text-align: center; }
   .section-inner { padding: 72px 0; }
@@ -899,9 +1158,6 @@ footer .container {
 </style>
 </head>
 <body>
-
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <header>
   <nav>
@@ -912,6 +1168,7 @@ footer .container {
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
+      <a href="#certifications">Certs</a>
       <a href="#resume">Résumé</a>
       <a href="#beyond">Beyond</a>
       <a href="#contact">Contact</a>
@@ -942,6 +1199,13 @@ footer .container {
       </div>
     </div>
     <div class="hero-right">
+      <div class="hero-portrait">
+        <img src="image_nrr.png" alt="Ninad Rade">
+        <div class="hero-portrait-overlay">
+          <div class="hero-portrait-name">Ninad Rade</div>
+          <div class="hero-portrait-loc">New York</div>
+        </div>
+      </div>
       <div class="hero-stats">
         <div class="stat-row">
           <span class="s-label">NYU GPA</span>
@@ -953,11 +1217,7 @@ footer .container {
         </div>
         <div class="stat-row">
           <span class="s-label">Projects shipped</span>
-          <span class="s-value" data-count="6">6 <span>+</span></span>
-        </div>
-        <div class="stat-row">
-          <span class="s-label">Efficiency gain at internship</span>
-          <span class="s-value">40–50%</span>
+          <span class="s-value" data-count="8">8 <span>+</span></span>
         </div>
         <div class="stat-row">
           <span class="s-label">Status</span>
@@ -986,14 +1246,14 @@ footer .container {
             but dependable in real-world conditions.
           </p>
           <p>
-            My work spans <strong>NLP, classical machine learning, and deep learning</strong>,
+            My work spans <strong>NLP, classical machine learning, deep learning, and big data engineering</strong>,
             with particular attention to the full lifecycle: raw data ingestion,
             feature engineering, model evaluation, and production-ready pipelines.
           </p>
           <p>
             Before NYU, I completed a <strong>B.E. in Computer Engineering with
-            Honors in AI & ML</strong> from the University of Mumbai, graduating
-            with a 8.97 CGPA. My internship at DavaNinja gave me hands-on
+            Honors in AI &amp; ML</strong> from the University of Mumbai, graduating
+            with an 8.97 CGPA. My internship at DavaNinja gave me hands-on
             experience building healthcare AI data systems at scale.
           </p>
           <div class="about-tags">
@@ -1001,13 +1261,21 @@ footer .container {
             <span class="tag">Machine Learning</span>
             <span class="tag">NLP</span>
             <span class="tag">Deep Learning</span>
+            <span class="tag">Apache Spark</span>
             <span class="tag">SQL</span>
-            <span class="tag">Data Engineering</span>
+            <span class="tag">React</span>
             <span class="tag">TensorFlow</span>
-            <span class="tag">Scikit-learn</span>
+            <span class="tag">Data Engineering</span>
           </div>
         </div>
         <div class="about-aside reveal reveal-delay-2">
+          <div class="about-photo">
+            <img src="image_nrr.png" alt="Portrait of Ninad Rade">
+            <div class="about-photo-caption">
+              <span>Ninad Rade</span>
+              <span>New York</span>
+            </div>
+          </div>
           <div class="aside-block">
             <div class="aside-label">Location</div>
             <p><strong>New York, USA</strong><br>F-1 Visa · CPT / OPT Eligible</p>
@@ -1043,21 +1311,34 @@ footer .container {
           <div class="skill-cat">Languages</div>
           <div class="skill-items">
             <span class="skill-chip">Python</span>
+            <span class="skill-chip">JavaScript</span>
             <span class="skill-chip">SQL</span>
             <span class="skill-chip">C / C++</span>
             <span class="skill-chip">Bash</span>
           </div>
         </div>
         <div class="skill-row reveal reveal-delay-1">
+          <div class="skill-cat">Web & Full-Stack</div>
+          <div class="skill-items">
+            <span class="skill-chip">React</span>
+            <span class="skill-chip">Node.js</span>
+            <span class="skill-chip">REST APIs</span>
+            <span class="skill-chip">JWT Auth</span>
+            <span class="skill-chip">Streamlit</span>
+          </div>
+        </div>
+        <div class="skill-row reveal reveal-delay-1">
           <div class="skill-cat">AI & ML</div>
           <div class="skill-items">
             <span class="skill-chip">Scikit-learn</span>
+            <span class="skill-chip">XGBoost</span>
+            <span class="skill-chip">LightGBM</span>
             <span class="skill-chip">Classification</span>
             <span class="skill-chip">Regression</span>
             <span class="skill-chip">Feature Engineering</span>
             <span class="skill-chip">Hyperparameter Tuning</span>
             <span class="skill-chip">SMOTE</span>
-            <span class="skill-chip">Cross-Validation</span>
+            <span class="skill-chip">SHAP</span>
             <span class="skill-chip">Agentic Systems</span>
           </div>
         </div>
@@ -1071,6 +1352,17 @@ footer .container {
             <span class="skill-chip">TF-IDF</span>
             <span class="skill-chip">Text Classification</span>
             <span class="skill-chip">LLM API Integration</span>
+          </div>
+        </div>
+        <div class="skill-row reveal reveal-delay-2">
+          <div class="skill-cat">Big Data</div>
+          <div class="skill-items">
+            <span class="skill-chip">Apache Spark</span>
+            <span class="skill-chip">PySpark</span>
+            <span class="skill-chip">Spark SQL</span>
+            <span class="skill-chip">Spark MLlib</span>
+            <span class="skill-chip">Distributed Processing</span>
+            <span class="skill-chip">Parquet</span>
           </div>
         </div>
         <div class="skill-row reveal reveal-delay-3">
@@ -1124,10 +1416,49 @@ footer .container {
         <div class="project-item reveal">
           <div class="p-index">01</div>
           <div class="p-content">
+            <div class="p-name">NYC Taxi Demand Prediction &amp; Anomaly Detection</div>
+            <p class="p-desc">
+              End-to-end PySpark pipeline ingesting ~10M NYC TLC Yellow Taxi trip records (~150MB Parquet).
+              Processed 8.8M cleaned trips in under 3 minutes on a 4-core Spark cluster using broadcast joins
+              and DataFrame caching. Trained Spark MLlib Random Forest achieving RMSE 41.35 and R² 0.69 —
+              a 4× improvement over baseline. Shipped a Streamlit dashboard for interactive demand exploration.
+            </p>
+            <div class="p-stack">
+              <span>Python</span><span>PySpark</span><span>Spark SQL</span><span>Spark MLlib</span><span>Streamlit</span><span>Parquet</span>
+            </div>
+          </div>
+          <div class="p-meta">
+            <div class="p-featured-badge">Featured</div>
+            <div class="p-highlight">10M records · 4-core cluster</div>
+          </div>
+        </div>
+
+        <div class="project-item reveal reveal-delay-1">
+          <div class="p-index">02</div>
+          <div class="p-content">
+            <div class="p-name">Finance Management System</div>
+            <p class="p-desc">
+              Full-stack MERN web app with JWT-based authentication, role-based access control, and
+              real-time dashboard for multi-user financial tracking across 5+ account types.
+              Architected a RESTful API layer with 12+ endpoints covering transaction CRUD and
+              account aggregation, reducing average query response time by 35%.
+            </p>
+            <div class="p-stack">
+              <span>JavaScript</span><span>React</span><span>Node.js</span><span>MongoDB</span><span>REST APIs</span>
+            </div>
+          </div>
+          <div class="p-meta">
+            <div class="p-highlight">35% faster queries · JWT auth</div>
+          </div>
+        </div>
+
+        <div class="project-item reveal reveal-delay-2">
+          <div class="p-index">03</div>
+          <div class="p-content">
             <div class="p-name">AI-Powered Spam Email Classifier</div>
             <p class="p-desc">
               End-to-end NLP pipeline combining classical ML with LLM reasoning. Built Naive Bayes,
-              Logistic Regression, and SVM classifiers optimized for F1-score — with OpenAI API as
+              Logistic Regression, and SVM classifiers achieving 97%+ F1-score — with OpenAI API as
               an intelligent fallback for ambiguous classifications, creating a production-style
               agentic decision system.
             </p>
@@ -1136,98 +1467,63 @@ footer .container {
             </div>
           </div>
           <div class="p-meta">
-            <div class="p-featured-badge">Featured</div>
-            <div class="p-highlight">Agentic fallback pipeline</div>
-          </div>
-        </div>
-
-        <div class="project-item reveal reveal-delay-1">
-          <div class="p-index">02</div>
-          <div class="p-content">
-            <div class="p-name">Heart Disease Risk Prediction</div>
-            <p class="p-desc">
-              Explainable AI for clinical decision support. Applied SMOTE for class imbalance handling,
-              compared Logistic Regression, Random Forest, and SVM, and surfaced interpretable clinical
-              risk indicators through feature importance analysis.
-            </p>
-            <div class="p-stack">
-              <span>Python</span><span>Scikit-learn</span><span>SMOTE</span><span>EDA</span>
-            </div>
-          </div>
-          <div class="p-meta">
-            <div class="p-highlight">Precision · Recall · F1 · ROC-AUC</div>
-          </div>
-        </div>
-
-        <div class="project-item reveal reveal-delay-2">
-          <div class="p-index">03</div>
-          <div class="p-content">
-            <div class="p-name">Stock Market Prediction with LSTM</div>
-            <p class="p-desc">
-              LSTM network with rolling-window feature engineering and strict temporal train/test
-              split to prevent data leakage. Window sizes tuned via MAE and RMSE to optimize
-              generalization across market conditions.
-            </p>
-            <div class="p-stack">
-              <span>Python</span><span>TensorFlow</span><span>LSTM</span><span>NumPy</span>
-            </div>
-          </div>
-          <div class="p-meta">
-            <div class="p-highlight">Temporal split · no leakage</div>
+            <div class="p-highlight">97%+ F1 · Agentic fallback</div>
           </div>
         </div>
 
         <div class="project-item reveal">
           <div class="p-index">04</div>
           <div class="p-content">
-            <div class="p-name">Pharmacy Data Structuring Framework</div>
+            <div class="p-name">Heart Disease Risk Prediction</div>
             <p class="p-desc">
-              Scalable multi-stage ETL pipeline — ingestion, validation, transformation, and
-              ML-ready output — built during my healthcare AI internship at DavaNinja.
-              Schema validation reduced null propagation across production workflows.
+              Explainable AI for clinical decision support. Applied SMOTE for class imbalance handling,
+              compared Logistic Regression, Random Forest, and SVM — Random Forest achieved 89% ROC-AUC.
+              Surfaced interpretable clinical risk indicators via feature importance, reducing feature
+              set from 13 to 7 variables.
             </p>
             <div class="p-stack">
-              <span>Python</span><span>SQL</span><span>NLP</span><span>Statistical Checks</span>
+              <span>Python</span><span>Scikit-learn</span><span>SMOTE</span><span>EDA</span>
             </div>
           </div>
           <div class="p-meta">
-            <div class="p-highlight">40–50% reduction in manual review</div>
+            <div class="p-highlight">89% ROC-AUC · Explainable AI</div>
           </div>
         </div>
 
         <div class="project-item reveal reveal-delay-1">
           <div class="p-index">05</div>
           <div class="p-content">
-            <div class="p-name">Task Manager CLI Application</div>
+            <div class="p-name">Stock Market Prediction with LSTM</div>
             <p class="p-desc">
-              Terminal-based task manager with CRUD operations, priority filtering, due-date
-              tracking, and persistent SQLite storage. Designed with strict OOP — separate modules
-              for CLI, database, and business logic.
+              LSTM network with rolling-window feature engineering and strict temporal train/test
+              split to prevent data leakage. Window sizes tuned via MAE and RMSE — reduced
+              prediction error by 18% over baseline across varying market conditions.
             </p>
             <div class="p-stack">
-              <span>Python</span><span>SQLite</span><span>OOP</span><span>Git</span>
+              <span>Python</span><span>TensorFlow</span><span>LSTM</span><span>NumPy</span>
             </div>
           </div>
           <div class="p-meta">
-            <div class="p-highlight">Modular · persistent · tested</div>
+            <div class="p-highlight">18% error reduction · no leakage</div>
           </div>
         </div>
 
         <div class="project-item reveal reveal-delay-2">
           <div class="p-index">06</div>
           <div class="p-content">
-            <div class="p-name">ESP32-CAM Surveillance System</div>
+            <div class="p-name">Pharmacy Data Structuring Framework</div>
             <p class="p-desc">
-              Motion-triggered edge imaging using ESP32-CAM with IR sensors and interrupt-based
-              handling. Edge-to-cloud pipeline to Firebase with false-trigger suppression logic
-              built into the firmware.
+              Scalable multi-stage ETL pipeline — ingestion, validation, transformation, and
+              ML-ready output — built during my healthcare AI internship at DavaNinja.
+              Cleaned and standardized 100K+ pharmacy records; schema validation reduced null
+              propagation across production workflows by 40–50%.
             </p>
             <div class="p-stack">
-              <span>C++</span><span>Firebase</span><span>ESP32</span><span>Embedded</span>
+              <span>Python</span><span>SQL</span><span>NLP</span><span>Statistical Checks</span>
             </div>
           </div>
           <div class="p-meta">
-            <div class="p-highlight">Edge → cloud · interrupt-driven</div>
+            <div class="p-highlight">100K+ records · 40–50% efficiency gain</div>
           </div>
         </div>
 
@@ -1252,12 +1548,13 @@ footer .container {
             <div class="exp-location">Mumbai, India</div>
           </div>
           <div class="exp-right">
-            <div class="exp-role">Software Engineer Intern — Healthcare AI</div>
+            <div class="exp-role">Software Engineering Intern</div>
             <div class="exp-company">DavaNinja Pvt. Ltd.</div>
             <ul class="exp-bullets">
-              <li>Engineered <strong>modular Python NLP pipelines</strong> to clean and standardize large-scale pharmacy datasets, producing structured inputs for supervised ML model development.</li>
-              <li>Implemented <strong>automated schema validation</strong> and statistical consistency checks for missing values and data drift, reducing manual review effort by <strong>40–50%</strong>.</li>
-              <li>Transformed heterogeneous healthcare records into consistent feature sets via rule-based parsing and statistical selection, enabling reproducible model training across classification workflows.</li>
+              <li>Engineered <strong>modular Python NLP pipelines</strong> to clean and standardize 100K+ pharmacy records, producing structured inputs for supervised ML model development.</li>
+              <li>Implemented <strong>automated schema validation</strong> and statistical consistency checks, reducing manual review effort by <strong>40–50%</strong> and improving downstream model reliability.</li>
+              <li>Integrated <strong>REST APIs</strong> to fetch and transform JSON data across 3 internal services, unblocking a 2-week pipeline bottleneck and enabling automated data ingestion.</li>
+              <li>Authored and executed <strong>40+ manual test cases</strong> for pre-release mobile builds, cutting QA review cycles by 30% before each production push.</li>
             </ul>
           </div>
         </div>
@@ -1343,29 +1640,80 @@ footer .container {
   </div>
 </section>
 
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <span class="s-num">06</span>
+        <h2>Certifi<em>cations</em></h2>
+      </div>
+      <div class="certs-grid">
+
+        <div class="cert-card reveal">
+          <div class="cert-top">
+            <div>
+              <div class="cert-issuer">HackerRank</div>
+              <div class="cert-name">Software Engineer Intern</div>
+            </div>
+            <div class="cert-icon">✦</div>
+          </div>
+          <p style="color:var(--text-2);font-size:13px;line-height:1.75;">
+            Verified proficiency in problem solving, data structures, and algorithmic thinking —
+            assessed through HackerRank's standardized Software Engineering certification track.
+          </p>
+          <div class="cert-bottom">
+            <span class="cert-year">Credential · 2026</span>
+            <span class="cert-badge">Verified</span>
+          </div>
+        </div>
+
+        <div class="cert-card reveal reveal-delay-2">
+          <div class="cert-top">
+            <div>
+              <div class="cert-issuer">Databricks</div>
+              <div class="cert-name">Generative AI Fundamentals</div>
+            </div>
+            <div class="cert-icon">◈</div>
+          </div>
+          <p style="color:var(--text-2);font-size:13px;line-height:1.75;">
+            Foundational certification covering LLM architecture, prompt engineering, RAG pipelines,
+            and responsible deployment of generative AI systems on the Databricks Lakehouse platform.
+          </p>
+          <div class="cert-bottom">
+            <span class="cert-year">Credential · 2026</span>
+            <span class="cert-badge">Verified</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- RESUME -->
 <section id="resume">
   <div class="container">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="s-num">06</span>
+        <span class="s-num">07</span>
         <h2>My <em>résumé</em></h2>
       </div>
       <div class="reveal">
         <div class="resume-card">
           <div>
             <div class="resume-name">Ninad Rade — Résumé</div>
-            <div class="resume-updated">Updated April 2025 · PDF · 1 page</div>
+            <div class="resume-updated">Updated May 2026 · PDF · 1 page</div>
             <p class="resume-blurb">
-              One page. Education, experience, projects, and skills — laid out cleanly.
-              Click to open it in a new tab, or download it directly.
+              One page. Education, experience, projects, certifications, and skills — laid out cleanly.
+              Click to open in a new tab, or download directly.
             </p>
             <div class="resume-actions">
-              <a href="NinadRadeResume.pdf" target="_blank" rel="noopener" class="btn-primary">
+              <a href="Ninad_latest.pdf" target="_blank" rel="noopener" class="btn-primary">
                 View résumé
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
               </a>
-              <a href="NinadRadeResume.pdf" download class="btn-text">
+              <a href="Ninad_latest.pdf" download class="btn-text">
                 Download PDF
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               </a>
@@ -1401,7 +1749,7 @@ footer .container {
   <div class="container">
     <div class="section-inner">
       <div class="section-header reveal">
-        <span class="s-num">07</span>
+        <span class="s-num">08</span>
         <h2>Beyond the <em>code</em></h2>
       </div>
       <p class="beyond-intro reveal">Not everything about me fits in a résumé.</p>
@@ -1412,11 +1760,54 @@ footer .container {
           <div class="hobby-label">Collector</div>
           <h3 class="hobby-title">Fraghead</h3>
           <p class="hobby-desc">I collect and obsess over fragrances — the way a scent anchors a memory or shifts a mood fascinates me. It's an invisible art form, and I'm deep in it. From niche houses to iconic classics, the collection keeps growing.</p>
-          <div style="border-top:1px solid var(--border);margin-top:28px;padding-top:24px;">
-            <p style="font-size:12px;color:var(--text-2);margin-bottom:14px;letter-spacing:0.02em;">Curious what I'm wearing today?</p>
-            <button id="frag-btn" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--text-2);border:1px solid var(--border);border-radius:4px;padding:8px 16px;background:none;cursor:pointer;font-family:var(--font);letter-spacing:0.02em;transition:all 0.2s;">Reveal today's wear →</button>
-            <div id="frag-answer" style="margin-top:16px;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--text);opacity:0;transform:translateY(6px);transition:opacity 0.4s ease,transform 0.4s ease;min-height:28px;"></div>
-            <div id="frag-note" style="font-size:11px;color:var(--text-3);margin-top:5px;min-height:16px;"></div>
+          <div class="mini-interaction">
+            <p class="mini-prompt">Tap a fragrance to read my take →</p>
+            <div class="favorite-frags">
+              <div class="favorite-frag">
+                <div class="favorite-frag-media">
+                  <img src="https://us.parfums-de-marly.com/cdn/shop/files/HEROD-PERFUME-75-PACK1-1X1_CENTERED_fba9c88d-7cf1-4202-bb2a-1ee9c9c8d82d.png?v=1758885289&width=1080" alt="Parfums de Marly Herod" loading="lazy" referrerpolicy="no-referrer">
+                </div>
+                <div>
+                  <div class="favorite-frag-house">Parfums de Marly</div>
+                  <div class="favorite-frag-name">Herod</div>
+                  <div class="frag-notes-list"><span>Cinnamon</span><span>Tobacco</span><span>Vanilla</span></div>
+                  <p class="favorite-frag-note">Warm, smoky, and polished — the kind of vanilla that feels dressed up instead of sweet.</p>
+                </div>
+              </div>
+              <div class="favorite-frag">
+                <div class="favorite-frag-media">
+                  <img src="https://www.tomfordbeauty.com/cdn/shop/files/tf_sku_T5Y201_2000x2000_0.png?v=1777855850&width=2000" alt="Tom Ford Ombre Leather" loading="lazy" referrerpolicy="no-referrer">
+                </div>
+                <div>
+                  <div class="favorite-frag-house">Tom Ford</div>
+                  <div class="favorite-frag-name">Ombre Leather</div>
+                  <div class="frag-notes-list"><span>Cardamom</span><span>Jasmine</span><span>Leather</span></div>
+                  <p class="favorite-frag-note">Dark leather with a clean floral edge — bold, minimal, and very easy to remember.</p>
+                </div>
+              </div>
+              <div class="favorite-frag">
+                <div class="favorite-frag-media">
+                  <img src="https://www.maisonmargiela-fragrances.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-margiela-master-catalog/default/dw50d2e0c3/images/products/MM008/2025/jazz_club_packshot.jpg?q=70&sfrm=png&sh=320&sm=cut&sw=320" alt="Maison Margiela Replica Jazz Club" loading="lazy" referrerpolicy="no-referrer">
+                </div>
+                <div>
+                  <div class="favorite-frag-house">Maison Margiela</div>
+                  <div class="favorite-frag-name">Replica Jazz Club</div>
+                  <div class="frag-notes-list"><span>Pink Pepper</span><span>Rum</span><span>Tobacco</span></div>
+                  <p class="favorite-frag-note">Boozy, smoky, and relaxed — like a late-night room with warm lights and good music.</p>
+                </div>
+              </div>
+              <div class="favorite-frag">
+                <div class="favorite-frag-media">
+                  <img src="https://www.xerjoff.com/cdn/shop/files/gallery-xerjoff-morethanwords-still.jpg?v=1747737937&width=1946" alt="Xerjoff More Than Words" loading="lazy" referrerpolicy="no-referrer">
+                </div>
+                <div>
+                  <div class="favorite-frag-house">Xerjoff</div>
+                  <div class="favorite-frag-name">More Than Words</div>
+                  <div class="frag-notes-list"><span>Woody</span><span>Floral</span><span>Amber</span></div>
+                  <p class="favorite-frag-note">A richer niche pick — dramatic, smooth, and a little mysterious in the best way.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1425,10 +1816,51 @@ footer .container {
           <div class="hobby-label">Runner</div>
           <h3 class="hobby-title">Fitness &amp; Running</h3>
           <p class="hobby-desc">Running is my reset — where I process ideas, clear my head, and find a discipline that carries into everything else I do. Consistent movement keeps me sharp, both mentally and physically.</p>
+
+          <!-- Strava Widget
+               To update with a real activity: edit the values below.
+               For live data, set up a GitHub Action to fetch your latest
+               Strava activity via the Strava API and write to a JSON file. -->
+          <div class="strava-widget">
+            <div class="strava-header">
+              <div class="strava-brand-row">
+                <div class="strava-dot"></div>
+                <span class="strava-brand">Strava</span>
+              </div>
+              <span class="strava-badge">Recent Activity</span>
+            </div>
+            <div class="strava-body">
+              <div class="strava-activity-name">
+                Morning Run
+                <span class="strava-activity-type">Run</span>
+              </div>
+              <div class="strava-metrics">
+                <div class="strava-metric">
+                  <span class="strava-metric-val">6.2<span class="strava-metric-unit"> km</span></span>
+                  <span class="strava-metric-label">Distance</span>
+                </div>
+                <div class="strava-metric">
+                  <span class="strava-metric-val">34<span class="strava-metric-unit">:12</span></span>
+                  <span class="strava-metric-label">Time</span>
+                </div>
+                <div class="strava-metric">
+                  <span class="strava-metric-val">5:31<span class="strava-metric-unit">/km</span></span>
+                  <span class="strava-metric-label">Avg Pace</span>
+                </div>
+              </div>
+            </div>
+            <div class="strava-footer">
+              <span class="strava-date">May 10, 2026</span>
+              <a href="https://www.strava.com/athletes/ninadrade" target="_blank" rel="noopener" class="strava-link">
+                View on Strava
+                <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+
         </div>
 
       </div>
-
 
     </div>
   </div>
@@ -1464,6 +1896,11 @@ footer .container {
               <span class="cl-value">github.com/offninad</span>
               <svg class="cl-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
+            <a href="https://www.strava.com/athletes/ninadrade" target="_blank" class="contact-link">
+              <span class="cl-label">Strava</span>
+              <span class="cl-value">strava.com/athletes/ninadrade</span>
+              <svg class="cl-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -1473,7 +1910,7 @@ footer .container {
 
 <footer>
   <div class="container">
-    <div class="footer-copy">© 2025 Ninad Rade</div>
+    <div class="footer-copy">© 2026 Ninad Rade</div>
     <div class="footer-right">NYU Tandon · New York</div>
   </div>
 </footer>
@@ -1496,57 +1933,8 @@ const barObs = new IntersectionObserver(entries => {
 }, { threshold: 0.3 });
 document.querySelectorAll('.edu-card').forEach(c => barObs.observe(c));
 
-/* Fragrance of the day */
-const frags = [
-  ['Armaf · Club de Nuit Thriller No.3',      'Bergamot · Cardamom · Vetiver · Sandalwood'],
-  ['Armaf · Club de Nuit Intense Man',         'Blackcurrant · Pineapple · Birch · Ambergris'],
-  ['Jean Paul Gaultier · Le Male Elixir',      'Lavender · Cardamom · Hawthorn · Amber'],
-  ['Jean Paul Gaultier · Le Beau Parfum',      'Bergamot · Coconut · Neroli · White Musk'],
-  ['Yves Saint Laurent · Y Intense',           'Bergamot · Ginger · Sage · Amberwood'],
-  ['Givenchy · Gentleman Réserve Privée',      'Iris · Patchouli · Leather · Cashmeran'],
-  ['Hermès · Terre d\'Hermès Vetiver',         'Vetiver · Orange · Flint · Cedarwood'],
-  ['Atkinsons · James',                        'Bergamot · Lavender · Cedarwood · Musk'],
-  ['Moncler · Collection Des Ambre',           'Labdanum · Amber · Sandalwood · White Musk'],
-  ['Parfums de Marly · Herod',                 'Tobacco · Vanilla · Patchouli · Cinnamon'],
-  ['Xerjoff · More Than Words',                'Rose · Bergamot · Oud · Sandalwood'],
-  ['Christian Dior · Sauvage',                 'Calabrian Bergamot · Pepper · Ambroxan'],
-  ['Hugo Boss · Bottled Beyond',               'Apple · Geranium · Birchwood · Vetiver'],
-  ['Thomas Kosmala · No.4 Orchid Oud',         'Oud · Orchid · Saffron · Rose · Amber'],
-  ['Thomas Kosmala · No.10 Accord Oud',        'Oud · Amber · Vanilla · Sandalwood'],
-  ['Tom Ford · Ombré Leather',                 'Cardamom · Jasmine · Leather · Amber'],
-  ['Viktor & Rolf · Spicebomb',                'Saffron · Cinnamon · Chili · Leather · Tobacco'],
-  ['Maison Margiela · Replica Jazz Club',      'Rum · Pink Pepper · Vetiver · Tonka Bean'],
-  ['Emporio Armani · Stronger With You Intensely', 'Chestnut · Lavender · Cardamom · Vanilla'],
-  ['Mancera · Instant Crush',                  'Rose · Oud · Iris · Amber · Musk'],
-  ['Amouroud · Nectar',                        'Rose · Ambergris · Oud · Iris · Sandalwood'],
-  ['Granado · Apothecário',                    'Vetiver · Cedar · Sandalwood · Amber'],
-  ['Arabiyat Prestige · Marwa',                'Rose · Oud · Amber · Musk · Sandalwood'],
-  ['Yves Saint Laurent · La Nuit de L\'Homme', 'Cardamom · Violet · Cedar · Vetiver'],
-  ['Paco Rabanne · Elixir Royal',              'Mandarin · Patchouli · Leather · Amber'],
-  ['Paco Rabanne · Fame',                      'Ylang-Ylang · Jasmine · Cashmeran · Oakmoss'],
-  ['Aesop · Aurner',                           'Sandalwood · Vetiver · Resin · Incense · Amber'],
-];
-const fragBtn = document.getElementById('frag-btn');
-const fragAnswer = document.getElementById('frag-answer');
-const fragNote = document.getElementById('frag-note');
-let lastIdx = -1;
-fragBtn.addEventListener('click', () => {
-  let idx;
-  do { idx = Math.floor(Math.random() * frags.length); } while (idx === lastIdx);
-  lastIdx = idx;
-  fragAnswer.style.opacity = '0';
-  fragAnswer.style.transform = 'translateY(6px)';
-  setTimeout(() => {
-    fragAnswer.textContent = frags[idx][0];
-    fragNote.textContent = frags[idx][1];
-    fragAnswer.style.opacity = '1';
-    fragAnswer.style.transform = 'translateY(0)';
-    fragBtn.textContent = 'Pick another →';
-  }, 180);
-});
-
 /* Animated stat counters */
-function animateCount(el, target, suffix, decimals) {
+function animateCount(el, target, decimals) {
   const duration = 1400;
   const start = performance.now();
   (function tick(now) {
@@ -1565,7 +1953,7 @@ const counterObs = new IntersectionObserver(entries => {
     if (!raw) return;
     counterObs.unobserve(el);
     const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
-    animateCount(el, parseFloat(raw), el.dataset.suffix || '', decimals);
+    animateCount(el, parseFloat(raw), decimals);
   });
 }, { threshold: 0.5 });
 document.querySelectorAll('.s-value[data-count]').forEach(el => counterObs.observe(el));
@@ -1583,6 +1971,30 @@ const navObs = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '-35% 0px -60% 0px' });
 sections.forEach(s => navObs.observe(s));
+
+/* Fragrance tap-to-expand interaction */
+document.querySelectorAll('.favorite-frag').forEach(frag => {
+  frag.addEventListener('click', () => {
+    const isOpen = frag.classList.contains('expanded');
+    document.querySelectorAll('.favorite-frag').forEach(f => f.classList.remove('expanded'));
+    if (!isOpen) frag.classList.add('expanded');
+  });
+});
+
+/* Cert card subtle tilt on hover */
+document.querySelectorAll('.cert-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `translateY(-2px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+    card.style.transition = 'transform 0.1s';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+    card.style.transition = 'transform 0.35s ease, border-color 0.3s';
+  });
+});
 </script>
 </body>
 </html>
