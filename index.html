@@ -1817,41 +1817,39 @@ footer .container {
           <h3 class="hobby-title">Fitness &amp; Running</h3>
           <p class="hobby-desc">Running is my reset — where I process ideas, clear my head, and find a discipline that carries into everything else I do. Consistent movement keeps me sharp, both mentally and physically.</p>
 
-          <!-- Strava Widget
-               To update with a real activity: edit the values below.
-               For live data, set up a GitHub Action to fetch your latest
-               Strava activity via the Strava API and write to a JSON file. -->
+          <!-- Strava Widget — live data fetched via GitHub Action (strava.yml)
+               Data is written to strava_data.json on a schedule; JS below reads it. -->
           <div class="strava-widget">
             <div class="strava-header">
               <div class="strava-brand-row">
                 <div class="strava-dot"></div>
                 <span class="strava-brand">Strava</span>
               </div>
-              <span class="strava-badge">Recent Activity</span>
+              <span class="strava-badge" id="strava-status">Loading…</span>
             </div>
             <div class="strava-body">
               <div class="strava-activity-name">
-                Morning Run
-                <span class="strava-activity-type">Run</span>
+                <span id="strava-name">—</span>
+                <span class="strava-activity-type" id="strava-type"></span>
               </div>
               <div class="strava-metrics">
                 <div class="strava-metric">
-                  <span class="strava-metric-val">6.2<span class="strava-metric-unit"> km</span></span>
+                  <span class="strava-metric-val" id="strava-distance">—<span class="strava-metric-unit"> km</span></span>
                   <span class="strava-metric-label">Distance</span>
                 </div>
                 <div class="strava-metric">
-                  <span class="strava-metric-val">34<span class="strava-metric-unit">:12</span></span>
+                  <span class="strava-metric-val" id="strava-time">—<span class="strava-metric-unit"></span></span>
                   <span class="strava-metric-label">Time</span>
                 </div>
                 <div class="strava-metric">
-                  <span class="strava-metric-val">5:31<span class="strava-metric-unit">/km</span></span>
+                  <span class="strava-metric-val" id="strava-pace">—<span class="strava-metric-unit">/km</span></span>
                   <span class="strava-metric-label">Avg Pace</span>
                 </div>
               </div>
             </div>
             <div class="strava-footer">
-              <span class="strava-date">May 10, 2026</span>
-              <a href="https://www.strava.com/athletes/ninadrade" target="_blank" rel="noopener" class="strava-link">
+              <span class="strava-date" id="strava-date">—</span>
+              <a href="https://www.strava.com/athletes/195549700" target="_blank" rel="noopener" class="strava-link">
                 View on Strava
                 <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
               </a>
@@ -1896,9 +1894,9 @@ footer .container {
               <span class="cl-value">github.com/offninad</span>
               <svg class="cl-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
-            <a href="https://www.strava.com/athletes/ninadrade" target="_blank" class="contact-link">
+            <a href="https://www.strava.com/athletes/195549700" target="_blank" class="contact-link">
               <span class="cl-label">Strava</span>
-              <span class="cl-value">strava.com/athletes/ninadrade</span>
+              <span class="cl-value">strava.com/athletes/195549700</span>
               <svg class="cl-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
           </div>
@@ -1995,6 +1993,49 @@ document.querySelectorAll('.cert-card').forEach(card => {
     card.style.transition = 'transform 0.35s ease, border-color 0.3s';
   });
 });
+
+/* Strava live data — reads strava_data.json written by GitHub Action */
+(async function loadStrava() {
+  function fmtTime(seconds) {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+  function fmtPace(metersPerSec) {
+    if (!metersPerSec || metersPerSec === 0) return '—';
+    const secPerKm = 1000 / metersPerSec;
+    const m = Math.floor(secPerKm / 60);
+    const s = Math.round(secPerKm % 60);
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  try {
+    const res = await fetch('strava_data.json?v=' + Date.now());
+    if (!res.ok) throw new Error('no data');
+    const d = await res.json();
+    document.getElementById('strava-name').textContent = d.name || 'Activity';
+    document.getElementById('strava-type').textContent = d.type || '';
+    const distKm = d.distance ? (d.distance / 1000).toFixed(1) : '—';
+    document.getElementById('strava-distance').childNodes[0].textContent = distKm;
+    document.getElementById('strava-time').childNodes[0].textContent = d.moving_time ? fmtTime(d.moving_time) : '—';
+    document.getElementById('strava-pace').childNodes[0].textContent = d.average_speed ? fmtPace(d.average_speed) : '—';
+    document.getElementById('strava-date').textContent = d.start_date_local ? fmtDate(d.start_date_local) : '';
+    document.getElementById('strava-status').textContent = 'Recent Activity';
+  } catch (_) {
+    document.getElementById('strava-status').textContent = 'Strava';
+    document.getElementById('strava-name').textContent = 'Morning Run';
+    document.getElementById('strava-type').textContent = 'Run';
+    document.getElementById('strava-distance').childNodes[0].textContent = '6.2';
+    document.getElementById('strava-time').childNodes[0].textContent = '34:12';
+    document.getElementById('strava-pace').childNodes[0].textContent = '5:31';
+    document.getElementById('strava-date').textContent = 'May 10, 2026';
+  }
+})();
 </script>
 </body>
 </html>
