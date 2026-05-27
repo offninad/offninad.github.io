@@ -188,7 +188,12 @@ nav {
   color: var(--text);
   margin-bottom: 36px;
 }
-.hero-title .ln { display: block; overflow: hidden; }
+.hero-title .ln {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: keep-all;
+}
 .hero-title .wd { display: inline-block; }
 
 .hero-sub {
@@ -757,7 +762,7 @@ footer .w { display: flex; justify-content: space-between; align-items: center; 
   .sp { padding: 72px 0; }
 }
 @media (max-width: 540px) {
-  .hero-title { font-size: 72px; }
+  .hero-title { font-size: clamp(52px, 18vw, 72px); }
   h2 { font-size: 26px; }
   .nav-links { display: none; }
   .hero-strip { gap: 12px; }
@@ -1318,6 +1323,11 @@ footer .w { display: flex; justify-content: space-between; align-items: center; 
             <a href="https://linkedin.com/in/ninadrade" target="_blank" rel="noopener" class="c-item">
               <span class="c-lbl">LinkedIn</span>
               <span class="c-val">linkedin.com/in/ninadrade</span>
+              <svg class="c-arr" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://offninad.github.io" target="_blank" rel="noopener" class="c-item">
+              <span class="c-lbl">Portfolio</span>
+              <span class="c-val">offninad.github.io</span>
               <svg class="c-arr" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
             <a href="https://github.com/offninad" target="_blank" rel="noopener" class="c-item">
