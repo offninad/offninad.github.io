@@ -875,7 +875,26 @@ button {
 /* ─── responsive ──────────────────────────────────────────────────── */
 @media (max-width: 760px) {
   .top {
-    padding: 16px 18px;
+    padding: calc(14px + env(safe-area-inset-top)) 16px 14px;
+  }
+
+  /* Fade the bottle's base into darkness behind the lower UI so the hero
+     text and dock are always readable, no matter what's rendered behind. */
+  .app::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50%;
+    background: linear-gradient(
+      to top,
+      rgba(10, 6, 4, 0.95) 24%,
+      rgba(10, 6, 4, 0.55) 60%,
+      transparent
+    );
+    z-index: 1;
+    pointer-events: none;
   }
 
   .status {
@@ -894,14 +913,27 @@ button {
   }
 
   .hero {
-    left: 20px;
-    right: 20px;
-    bottom: 136px;
+    left: 22px;
+    right: 22px;
+    bottom: calc(128px + env(safe-area-inset-bottom));
     max-width: none;
+    z-index: 95;
+  }
+
+  .hero .kicker {
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+    line-height: 1.06;
+    margin-bottom: 12px;
   }
 
   .hero-line {
-    max-width: 300px;
+    max-width: none;
+    font-size: 12px;
+    line-height: 1.72;
   }
 
   .hint {
@@ -915,7 +947,7 @@ button {
   .contact-card {
     left: 12px;
     right: auto;
-    bottom: 72px;
+    bottom: calc(70px + env(safe-area-inset-bottom));
     width: auto;
     padding: 7px;
   }
@@ -934,7 +966,7 @@ button {
   }
 
   .dock {
-    bottom: 16px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
     width: calc(100vw - 24px);
     justify-content: space-between;
   }
@@ -955,9 +987,9 @@ button {
     top: auto;
     right: 12px;
     left: 12px;
-    bottom: 66px;
+    bottom: calc(64px + env(safe-area-inset-bottom));
     width: auto;
-    max-height: 47vh;
+    max-height: 46vh;
     transform: translateY(30px);
   }
 
@@ -982,10 +1014,10 @@ button {
   .projects {
     left: 12px;
     right: 12px;
-    bottom: 62px;
+    bottom: calc(60px + env(safe-area-inset-bottom));
     width: auto;
     transform: translateY(28px);
-    max-height: 56vh;
+    max-height: 54vh;
     padding: 24px 18px 18px;
   }
 

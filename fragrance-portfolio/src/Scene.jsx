@@ -37,9 +37,12 @@ function Glow() {
 }
 
 export default function Scene({ section, setSection, onSync }) {
-  const aspect = useThree((s) => s.size.width / s.size.height)
+  const size = useThree((s) => s.size)
+  const aspect = size.width / size.height
   // Shrink the whole stage on narrow screens so the bottle never clips.
   const stageScale = THREE.MathUtils.clamp(aspect / 0.95, 0.52, 1)
+  // Phones get a lighter glass shader + env map to keep the frame rate up.
+  const mobile = size.width < 760
 
   return (
     <>
@@ -59,7 +62,7 @@ export default function Scene({ section, setSection, onSync }) {
       <directionalLight position={[-4, 2, -4]} intensity={1.2} color="#ff9655" />
 
       {/* Procedural HDR-style studio: soft warm boxes for glass reflections. */}
-      <Environment resolution={256}>
+      <Environment resolution={mobile ? 128 : 256}>
         <Lightformer
           form="rect"
           intensity={2.4}
@@ -97,6 +100,7 @@ export default function Scene({ section, setSection, onSync }) {
 
       <group scale={stageScale}>
         <Bottle
+          mobile={mobile}
           setSection={setSection}
           bottleAnnotations={
             <Annotations scope="bottle" section={section} setSection={setSection} />

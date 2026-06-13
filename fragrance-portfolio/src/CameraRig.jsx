@@ -28,7 +28,13 @@ const POSES = {
 function poseFor(section, mobile) {
   const v = POSES[section] ?? POSES.home
   if (!mobile || section === 'intro') return v
-  // Portrait: pull back and lift framing so panels/overlays don't cover it.
+  // Portrait home: ride the bottle high in the frame (aim below it) so the
+  // hero text + dock have clear room in the lower third.
+  if (section === 'home') {
+    return { pos: [0, 1.35, 8.0], tgt: [0, -0.7, 0] }
+  }
+  // Other sections: pull back and lift framing so the bottom sheet doesn't
+  // cover the focal point.
   return {
     pos: [v.pos[0] * 0.7, v.pos[1] * 0.82 + 0.15, v.pos[2] * 1.25],
     tgt: [v.tgt[0], v.tgt[1] + 0.15, v.tgt[2]],

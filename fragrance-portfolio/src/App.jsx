@@ -7,6 +7,11 @@ import ResumeModal from './ResumeModal.jsx'
 import { LINKS, NAV } from './content.js'
 
 const PANEL_SECTIONS = ['experience', 'education', 'beyond']
+// Cap the pixel ratio on phones — high-DPR + a transmission FBO is brutal on
+// mobile GPUs, and the frosted glass hides the lower resolution anyway.
+const IS_MOBILE =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(max-width: 760px)').matches
 const CONTACT_LABELS = new Set(['Email', 'LinkedIn', 'GitHub'])
 const CONTACT_LINKS = LINKS.filter((link) => CONTACT_LABELS.has(link.label))
 
@@ -57,9 +62,9 @@ export default function App() {
   return (
     <div className={`app${ready ? ' ready' : ''}${panelOpen ? ' shift' : ''}`}>
       <Canvas
-        dpr={[1, 1.8]}
+        dpr={IS_MOBILE ? [1, 1.5] : [1, 1.8]}
         camera={{ fov: 35, position: [0, 9, 0.02], near: 0.1, far: 60 }}
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       >
         <Scene section={section} setSection={setSection} onSync={setSynced} />
       </Canvas>

@@ -167,6 +167,7 @@ function drawPlateTop(c) {
 }
 
 export default function Bottle({
+  mobile = false,
   setSection,
   bottleAnnotations,
   plateAnnotations,
@@ -256,10 +257,10 @@ export default function Bottle({
           onDoubleClick={() => setSection('home')}
         >
           <MeshTransmissionMaterial
-            backside
-            samples={6}
-            resolution={512}
-            backsideResolution={256}
+            backside={!mobile}
+            samples={mobile ? 3 : 6}
+            resolution={mobile ? 256 : 512}
+            backsideResolution={mobile ? 128 : 256}
             transmission={1}
             roughness={0.26}
             thickness={0.9}
