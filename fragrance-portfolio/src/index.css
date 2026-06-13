@@ -631,6 +631,79 @@ button {
   color: var(--t3);
 }
 
+/* ─── like button + live counter ──────────────────────────────────── */
+.like {
+  margin-top: 14px;
+}
+
+.like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.12s;
+}
+
+.like-btn:hover:not(:disabled) {
+  border-color: var(--amber);
+  background: rgba(200, 169, 126, 0.08);
+  color: var(--amber);
+}
+
+.like-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.like-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: fill 0.25s, transform 0.25s;
+}
+
+.like-btn[data-liked='true'] {
+  border-color: var(--amber);
+  color: var(--amber);
+  cursor: default;
+  opacity: 1;
+}
+
+.like-btn[data-liked='true'] svg {
+  fill: var(--amber);
+  stroke: var(--amber);
+  transform: translateY(-1px);
+}
+
+.like-count {
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--t2);
+}
+
+.like-count strong {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--amber);
+  margin-right: 5px;
+}
+
+.like-dim {
+  color: var(--t3);
+  font-style: italic;
+}
+
 /* ─── projects overlay (immersive grid) ───────────────────────────── */
 .projects {
   position: fixed;

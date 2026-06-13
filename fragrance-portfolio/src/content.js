@@ -114,13 +114,6 @@ export const PROJECTS = [
   },
 ]
 
-export const FRAGRANCES = [
-  { house: 'Parfums de Marly', name: 'Herod', notes: 'cinnamon · tobacco · vanilla' },
-  { house: 'Tom Ford', name: 'Ombré Leather', notes: 'cardamom · jasmine · leather' },
-  { house: 'Maison Margiela', name: 'Replica Jazz Club', notes: 'pink pepper · rum · tobacco' },
-  { house: 'Xerjoff', name: 'More Than Words', notes: 'woody · floral · amber' },
-]
-
 export const LINKS = [
   { label: 'Email', value: 'radeninad@gmail.com', href: 'mailto:radeninad@gmail.com' },
   { label: 'LinkedIn', value: 'linkedin.com/in/ninadrade', href: 'https://linkedin.com/in/ninadrade' },

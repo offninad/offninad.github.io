@@ -1,4 +1,5 @@
-import { EXPERIENCE, EDUCATION, CERTS, FRAGRANCES, LINKS } from './content.js'
+import { EXPERIENCE, EDUCATION, CERTS, LINKS } from './content.js'
+import LikeButton from './LikeButton.jsx'
 
 function ExperiencePanel() {
   return (
@@ -83,18 +84,13 @@ function BeyondPanel() {
       </p>
       <article className="entry">
         <header>
-          <h3 className="small-h">On the shelf</h3>
+          <h3 className="small-h">Enjoyed the portfolio?</h3>
         </header>
-        <ul className="frags">
-          {FRAGRANCES.map((f) => (
-            <li key={f.name}>
-              <span>
-                <strong>{f.name}</strong> · {f.house}
-              </span>
-              <em>{f.notes}</em>
-            </li>
-          ))}
-        </ul>
+        <p className="prose">
+          If this put a smile on your face, leave a thumbs up — here's how many
+          people have so far.
+        </p>
+        <LikeButton />
       </article>
       <article className="entry">
         <header>
