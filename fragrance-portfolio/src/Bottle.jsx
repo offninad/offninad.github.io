@@ -103,22 +103,35 @@ function useLabelTexture(draw) {
   return tex
 }
 
+/* A continuous engraved band that wraps all the way around the cap. The
+ * unit starts with a separator (no trailing space) and is tiled twice, so
+ * the texture maps once around the full cylinder with a seamless back join. */
 function drawCapEngraving(c) {
-  const w = (c.width = 1024)
-  const h = (c.height = 256)
   const x = c.getContext('2d')
+  const unit = '   ·   NEW YORK UNIVERSITY   ·   MUMBAI UNIVERSITY'
+  const font = '600 60px Inter, system-ui, sans-serif'
+  const letterSpacing = '5px'
 
-  x.clearRect(0, 0, w, h)
+  // Measure the unit first (default canvas size is fine for measuring).
+  x.font = font
+  x.letterSpacing = letterSpacing
+  const unitW = Math.ceil(x.measureText(unit).width)
+  const reps = 2
 
-  x.textAlign = 'center'
+  // Sizing the canvas resets all 2D context state — re-apply afterward.
+  const h = (c.height = 200)
+  c.width = unitW * reps
+  x.font = font
+  x.letterSpacing = letterSpacing
+  x.textAlign = 'left'
   x.textBaseline = 'middle'
-  x.letterSpacing = '8px'
-  x.font = '600 78px Inter, system-ui, sans-serif'
-  x.lineWidth = 5
-  x.strokeStyle = 'rgba(12,9,7,0.94)'
-  x.fillStyle = 'rgba(225,190,144,0.92)'
-  x.strokeText('NYU & MUMBAI', w / 2, h / 2 + 2)
-  x.fillText('NYU & MUMBAI', w / 2, h / 2)
+  x.lineWidth = 4
+  x.strokeStyle = 'rgba(12,9,7,0.92)'
+  x.fillStyle = 'rgba(225,190,144,0.95)'
+  for (let i = 0; i < reps; i++) {
+    x.strokeText(unit, i * unitW, h / 2 + 2)
+    x.fillText(unit, i * unitW, h / 2)
+  }
   return c
 }
 
@@ -292,12 +305,13 @@ export default function Bottle({
           <cylinderGeometry args={[0.35, 0.37, 0.52, 48]} />
         </mesh>
         <mesh position={[0, 1.74, 0]} renderOrder={2}>
-          <cylinderGeometry args={[0.362, 0.362, 0.15, 32, 1, true, -0.58, 2]} />
+          <cylinderGeometry args={[0.362, 0.362, 0.18, 128, 1, true]} />
           <meshBasicMaterial
             map={capTex}
             transparent
             depthWrite={false}
             toneMapped={false}
+            side={THREE.DoubleSide}
             polygonOffset
             polygonOffsetFactor={-2}
           />

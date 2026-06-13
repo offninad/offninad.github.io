@@ -8,7 +8,7 @@ import { Html } from '@react-three/drei'
  */
 const ANNOS = {
   bottle: [
-    { id: 'education', n: '03', label: 'NYU & Mumbai', pos: [0.32, 1.78, 0], side: 'right' },
+    { id: 'education', n: '03', label: 'Education', pos: [0.32, 1.78, 0], side: 'right' },
     // The back label sits at z=-0.392. Keep the anchor just outside that plane.
     { id: 'experience', n: '02', label: 'Experience', pos: [0.48, 0.28, -0.405], side: 'right' },
     { id: 'beyond', n: '05', label: 'Beyond', pos: [-0.62, -1.08, 0.32], side: 'left' },
@@ -30,7 +30,7 @@ export default function Annotations({ scope = 'bottle', section, setSection }) {
       zIndexRange={[40, 10]}
     >
       <button
-        className={`anno ${a.side}${section !== 'home' ? ' hidden' : ''}`}
+        className={`anno ${a.side}${section === a.id ? ' hidden' : ''}`}
         onClick={() => setSection(a.id)}
         aria-label={a.label}
       >

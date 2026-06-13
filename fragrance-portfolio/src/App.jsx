@@ -90,10 +90,6 @@ export default function App() {
         </p>
       </div>
 
-      <p className="hint ui" data-hide={section !== 'home'}>
-        Drag to rotate · pick a section below
-      </p>
-
       <nav className="dock ui" aria-label="Sections">
         {NAV.map((item) => (
           <button

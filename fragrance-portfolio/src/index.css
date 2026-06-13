@@ -259,11 +259,12 @@ button {
 /* ─── persistent contact card ─────────────────────────────────────── */
 .contact-card {
   position: fixed;
-  left: 36px;
-  bottom: 30px;
+  right: 36px;
+  bottom: 88px;
   display: flex;
   align-items: center;
-  width: 294px;
+  width: max-content;
+  max-width: calc(100vw - 72px);
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 3px;
@@ -913,6 +914,7 @@ button {
 
   .contact-card {
     left: 12px;
+    right: auto;
     bottom: 72px;
     width: auto;
     padding: 7px;
