@@ -23,7 +23,7 @@ export default function ResumeModal({ open, onClose }) {
             <h3>Ninad Rade — One-Page Resume</h3>
           </div>
           <div className="modal-actions">
-            <a className="btn-primary" href={RESUME_PDF} download="NinadRade-Resume.pdf">
+            <a className="btn-primary" href={RESUME_PDF} download="Ninad_R_Rade_resume.pdf">
               Download Resume (PDF)
             </a>
             <button className="modal-x" onClick={onClose} aria-label="Close">

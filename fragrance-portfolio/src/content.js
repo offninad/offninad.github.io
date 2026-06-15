@@ -8,7 +8,7 @@ export const NAV = [
   { id: 'beyond', n: '05', label: 'Beyond' },
 ]
 
-export const RESUME_PDF = 'NinadRade-Resume.pdf'
+export const RESUME_PDF = 'Ninad_R_Rade_resume.pdf'
 
 export const EXPERIENCE = [
   {
