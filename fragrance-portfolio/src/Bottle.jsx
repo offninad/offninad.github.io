@@ -299,27 +299,41 @@ export default function Bottle({
         </mesh>
 
         {/* collar + cap */}
-        <mesh position={[0, 1.44, 0]} material={metal}>
-          <cylinderGeometry args={[0.24, 0.24, 0.09, 40]} />
-        </mesh>
-        <mesh position={[0, 1.74, 0]} material={engravedMetal}>
-          <cylinderGeometry args={[0.35, 0.37, 0.52, 48]} />
-        </mesh>
-        <mesh position={[0, 1.74, 0]} renderOrder={2}>
-          <cylinderGeometry args={[0.362, 0.362, 0.18, 128, 1, true]} />
-          <meshBasicMaterial
-            map={capTex}
-            transparent
-            depthWrite={false}
-            toneMapped={false}
-            side={THREE.DoubleSide}
-            polygonOffset
-            polygonOffsetFactor={-2}
-          />
-        </mesh>
-        <mesh position={[0, 2.005, 0]} material={metal}>
-          <cylinderGeometry args={[0.33, 0.35, 0.02, 48]} />
-        </mesh>
+        <group
+          onClick={(e) => {
+            e.stopPropagation()
+            setSection('education')
+          }}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            document.body.style.cursor = 'pointer'
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = ''
+          }}
+        >
+          <mesh position={[0, 1.44, 0]} material={metal}>
+            <cylinderGeometry args={[0.24, 0.24, 0.09, 40]} />
+          </mesh>
+          <mesh position={[0, 1.74, 0]} material={engravedMetal}>
+            <cylinderGeometry args={[0.35, 0.37, 0.52, 48]} />
+          </mesh>
+          <mesh position={[0, 1.74, 0]} renderOrder={2}>
+            <cylinderGeometry args={[0.362, 0.362, 0.18, 128, 1, true]} />
+            <meshBasicMaterial
+              map={capTex}
+              transparent
+              depthWrite={false}
+              toneMapped={false}
+              side={THREE.DoubleSide}
+              polygonOffset
+              polygonOffsetFactor={-2}
+            />
+          </mesh>
+          <mesh position={[0, 2.005, 0]} material={metal}>
+            <cylinderGeometry args={[0.33, 0.35, 0.02, 48]} />
+          </mesh>
+        </group>
 
         {/* labels */}
         <mesh position={[0, -0.08, 0.392]}>
