@@ -62,6 +62,7 @@ export default function App() {
   return (
     <div className={`app${ready ? ' ready' : ''}${panelOpen ? ' shift' : ''}`}>
       <Canvas
+        className="stage"
         dpr={IS_MOBILE ? [1, 1.5] : [1, 1.8]}
         camera={{ fov: 35, position: [0, 9, 0.02], near: 0.1, far: 60 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
@@ -76,7 +77,7 @@ export default function App() {
         <div className="top-right">
           <span className="status">
             <span className="pill-dot" />
-            Open to internships
+            Closed to internships
           </span>
           <button className="btn-ghost" onClick={() => setShowResume(true)}>
             View One-Page Resume
@@ -85,13 +86,14 @@ export default function App() {
       </header>
 
       <div className="hero ui" data-hide={section !== 'home'}>
-        <p className="kicker">Ninad Rade · ML Engineer</p>
+        <p className="kicker">Ninad Rade · AI Solutions Engineer @ Boon.AI</p>
         <h1>
           If My Resume Was a <em>Fragrance Bottle</em>
         </h1>
         <p className="hero-line">
-          Building production-grade AI systems — distributed data pipelines to
-          deep learning. MS at NYU Tandon, New York. Turn the bottle to explore.
+          AI Solutions Engineer at Boon.AI, building production-grade AI
+          systems — distributed data pipelines to deep learning. MS at NYU
+          Tandon, New York. Turn the bottle to explore.
         </p>
       </div>
 

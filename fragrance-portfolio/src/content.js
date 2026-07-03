@@ -12,6 +12,17 @@ export const RESUME_PDF = 'Ninad_R_Rade_resume.pdf'
 
 export const EXPERIENCE = [
   {
+    role: 'AI Solutions Engineer',
+    org: 'Boon.AI',
+    period: '2026 – Present',
+    loc: 'New York, USA',
+    bullets: [
+      'Designing and shipping production AI solutions for enterprise customers — from scoping requirements to deploying LLM-powered workflows.',
+      'Building integrations between customer data systems and AI pipelines, turning manual business processes into automated products.',
+      'Partnering with customers and internal teams to translate real operational problems into reliable, measurable AI systems.',
+    ],
+  },
+  {
     role: 'Software Engineering Intern',
     org: 'DavaNinja Pvt. Ltd. — Healthcare AI Systems',
     period: 'Oct 2024 – Mar 2025',

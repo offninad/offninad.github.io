@@ -41,7 +41,7 @@ function drawFrontLabel(c) {
 
   x.letterSpacing = '1px'
   x.font = 'italic 500 30px "Cormorant Garamond", Georgia, serif'
-  x.fillText('Machine Learning Engineer', cx, 318)
+  x.fillText('AI Solutions Engineer', cx, 318)
 
   x.fillRect(cx - 32, 384, 64, 2)
 
@@ -60,24 +60,31 @@ function drawBackLabel(c) {
   const cx = w / 2
 
   x.letterSpacing = '6px'
-  x.font = '400 21px Inter, system-ui, sans-serif'
-  x.fillText('EXPERIENCE', cx, 92)
+  x.font = '400 20px Inter, system-ui, sans-serif'
+  x.fillText('EXPERIENCE', cx, 74)
 
-  x.fillRect(cx - 32, 128, 64, 2)
-
-  x.letterSpacing = '1px'
-  x.font = '600 36px "Cormorant Garamond", Georgia, serif'
-  x.fillText('DavaNinja', cx, 196)
-  x.letterSpacing = '0.5px'
-  x.font = '400 18px Inter, system-ui, sans-serif'
-  x.fillText('Software Engineering Intern · 2024 – 25', cx, 232)
+  x.fillRect(cx - 32, 104, 64, 2)
 
   x.letterSpacing = '1px'
-  x.font = '600 36px "Cormorant Garamond", Georgia, serif'
-  x.fillText('AIESEC in India', cx, 308)
+  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
+  x.fillText('Boon.AI', cx, 158)
   x.letterSpacing = '0.5px'
-  x.font = '400 18px Inter, system-ui, sans-serif'
-  x.fillText('VP, Organizing Committee · 2022', cx, 344)
+  x.font = '400 17px Inter, system-ui, sans-serif'
+  x.fillText('AI Solutions Engineer · 2026 – Present', cx, 190)
+
+  x.letterSpacing = '1px'
+  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
+  x.fillText('DavaNinja', cx, 250)
+  x.letterSpacing = '0.5px'
+  x.font = '400 17px Inter, system-ui, sans-serif'
+  x.fillText('Software Engineering Intern · 2024 – 25', cx, 282)
+
+  x.letterSpacing = '1px'
+  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
+  x.fillText('AIESEC in India', cx, 342)
+  x.letterSpacing = '0.5px'
+  x.font = '400 17px Inter, system-ui, sans-serif'
+  x.fillText('VP, Organizing Committee · 2022', cx, 374)
   return c
 }
 

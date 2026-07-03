@@ -56,11 +56,17 @@ button {
 
 .app canvas {
   touch-action: none;
+}
+
+/* The stage is the R3F container: canvas + projected annotation DOM.
+   Shifting it (not just the canvas) keeps the hotspots pinned to the
+   bottle — and clickable — while the content panel is open. */
+.stage {
   transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Slide the stage left so the right-hand content panel never covers it. */
-.app.shift canvas {
+.app.shift .stage {
   transform: translateX(-19%);
 }
 
@@ -154,8 +160,8 @@ button {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
+  background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.18);
 }
 
 /* ─── hero copy (home) ────────────────────────────────────────────── */
@@ -174,6 +180,8 @@ button {
   max-width: 430px;
   z-index: 90;
   transition: opacity 0.6s ease 0.5s;
+  /* plain copy — never steal clicks from the 3D hotspots behind it */
+  pointer-events: none !important;
 }
 
 .hero h1 {
@@ -341,12 +349,20 @@ button {
 
 /* ─── 3D annotations (line diagrams) ──────────────────────────────── */
 .anno {
+  position: relative;
   display: flex;
   align-items: center;
   white-space: nowrap;
   opacity: 1;
   transition: opacity 0.5s ease;
   pointer-events: auto;
+}
+
+/* Invisible halo: a far more forgiving click target than the hairline. */
+.anno::after {
+  content: '';
+  position: absolute;
+  inset: -16px -18px;
 }
 
 .anno.hidden {
@@ -400,12 +416,19 @@ button {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text);
-  padding: 8px 6px;
-  transition: color 0.25s;
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: rgba(12, 8, 5, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
 }
 
 .anno:hover .anno-tag {
   color: var(--amber);
+  border-color: var(--amber);
+  background: rgba(200, 169, 126, 0.1);
 }
 
 .anno-tag b {
@@ -443,8 +466,8 @@ button {
   visibility: visible;
   pointer-events: auto;
   transform: translateY(-50%) translateX(0);
-  transition: opacity 0.55s ease 0.45s,
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, visibility 0s;
+  transition: opacity 0.55s ease 0.2s,
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, visibility 0s;
 }
 
 .panel-scroll {
@@ -452,6 +475,19 @@ button {
   padding: 40px 38px 34px;
   scrollbar-width: thin;
   scrollbar-color: var(--t3) transparent;
+  /* remounted per section (keyed) so switching panels cross-fades */
+  animation: panel-swap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes panel-swap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .panel-close {
@@ -980,8 +1016,8 @@ button {
     letter-spacing: 0.1em;
   }
 
-  /* the bottom-sheet panel handles framing on mobile — no canvas shift */
-  .app.shift canvas {
+  /* the bottom-sheet panel handles framing on mobile — no stage shift */
+  .app.shift .stage {
     transform: none;
   }
 

@@ -137,7 +137,10 @@ export default function Panel({ section, onClose }) {
       <button className="panel-close" onClick={onClose} aria-label="Close">
         ×
       </button>
-      <div className="panel-scroll">{Body ? <Body /> : null}</div>
+      {/* keyed remount restarts the panel-swap animation on section change */}
+      <div className="panel-scroll" key={section}>
+        {Body ? <Body /> : null}
+      </div>
     </aside>
   )
 }
