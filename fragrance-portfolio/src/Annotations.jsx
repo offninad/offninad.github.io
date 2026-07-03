@@ -1,3 +1,6 @@
+import { useRef, useState } from 'react'
+import * as THREE from 'three'
+import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 
 /*
@@ -8,39 +11,65 @@ import { Html } from '@react-three/drei'
  */
 const ANNOS = {
   bottle: [
-    { id: 'education', n: '03', label: 'Education', pos: [0.32, 1.78, 0], side: 'right' },
+    { id: 'education', n: '03', label: 'Education', pos: [0.32, 1.78, 0], len: 96 },
     // The back label sits at z=-0.392. Keep the anchor just outside that plane.
-    { id: 'experience', n: '02', label: 'Experience', pos: [0.48, 0.28, -0.405], side: 'right' },
-    { id: 'beyond', n: '05', label: 'Beyond', pos: [-0.62, -1.08, 0.32], side: 'left' },
+    { id: 'experience', n: '02', label: 'Experience', pos: [0.48, 0.28, -0.405], len: 118 },
+    // Bottom-right corner: the home hero copy owns the lower-left of the frame.
+    { id: 'beyond', n: '05', label: 'Beyond', pos: [0.62, -1.08, 0.32], len: 96 },
   ],
   plate: [
     // This coordinate is local to the plate group, whose origin is its center.
-    { id: 'projects', n: '04', label: 'Projects', pos: [-1.18, 0.11, 0.45], side: 'left' },
+    { id: 'projects', n: '04', label: 'Projects', pos: [-1.18, 0.11, 0.45], len: 140 },
   ],
+}
+
+const anchorWorld = new THREE.Vector3()
+const axisWorld = new THREE.Vector3()
+
+function Anno({ a, section, setSection }) {
+  const group = useRef()
+  // Whichever way the anchor sits relative to the bottle's center axis on
+  // screen, extend the tag further that way — never back across the bottle.
+  // Re-evaluated per frame because orbiting mirrors the anchors.
+  const [side, setSide] = useState('right')
+  const sideRef = useRef('right')
+
+  useFrame(({ camera }) => {
+    if (!group.current) return
+    group.current.getWorldPosition(anchorWorld)
+    // Bottle and plate are both centered on the world Y axis.
+    axisWorld.set(0, anchorWorld.y, 0)
+    const dx = anchorWorld.project(camera).x - axisWorld.project(camera).x
+    // Deadband so the tag doesn't flap while the anchor crosses the axis.
+    const next = dx > 0.012 ? 'right' : dx < -0.012 ? 'left' : null
+    if (next && next !== sideRef.current) {
+      sideRef.current = next
+      setSide(next)
+    }
+  })
+
+  return (
+    <group ref={group} position={a.pos}>
+      <Html center distanceFactor={4.6} transform={false} zIndexRange={[40, 10]}>
+        <button
+          className={`anno ${side}${section === a.id ? ' hidden' : ''}`}
+          onClick={() => setSection(a.id)}
+          aria-label={a.label}
+        >
+          <span className="anno-dot" />
+          <span className="anno-line" style={{ width: a.len }} />
+          <span className="anno-tag">
+            <b>{a.n}</b>
+            {a.label}
+          </span>
+        </button>
+      </Html>
+    </group>
+  )
 }
 
 export default function Annotations({ scope = 'bottle', section, setSection }) {
   return ANNOS[scope].map((a) => (
-    <Html
-      key={a.id}
-      position={a.pos}
-      center
-      distanceFactor={6}
-      transform={false}
-      zIndexRange={[40, 10]}
-    >
-      <button
-        className={`anno ${a.side}${section === a.id ? ' hidden' : ''}`}
-        onClick={() => setSection(a.id)}
-        aria-label={a.label}
-      >
-        <span className="anno-dot" />
-        <span className="anno-line" />
-        <span className="anno-tag">
-          <b>{a.n}</b>
-          {a.label}
-        </span>
-      </button>
-    </Html>
+    <Anno key={a.id} a={a} section={section} setSection={setSection} />
   ))
 }
