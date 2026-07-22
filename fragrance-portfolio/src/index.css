@@ -1,4 +1,13 @@
-/* ─── Eau de Code — global styles ─────────────────────────────────── */
+/* ─── Eau de Code — global styles ─────────────────────────────────────
+ *
+ * Motion system (the full set of durations used on this site):
+ *   --t-fast    immediate feedback (active states)
+ *   --t-hover   hover/focus color and border shifts
+ *   --t-reveal  content reveals (panels, annotation fades)
+ *   Camera flights (GSAP, 1.6s) are the one orchestrated exception.
+ * Everything animates transform/opacity/color only, one easing family,
+ * and prefers-reduced-motion collapses all of it (see end of file).
+ * ──────────────────────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -18,6 +27,10 @@
   --border: rgba(200, 169, 126, 0.18);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Inter', system-ui, sans-serif;
+  --t-fast: 120ms;
+  --t-hover: 200ms;
+  --t-reveal: 350ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html,
@@ -47,6 +60,13 @@ button {
   font: inherit;
   color: inherit;
   cursor: pointer;
+}
+
+/* One visible focus treatment everywhere; mouse clicks stay clean. */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .app {
@@ -157,7 +177,7 @@ button {
   border: 1px solid var(--border);
   border-radius: 2px;
   padding: 9px 16px;
-  transition: border-color 0.25s, background 0.25s, color 0.25s;
+  transition: border-color var(--t-hover), background var(--t-hover), color var(--t-hover);
 }
 
 .btn-ghost:hover {
@@ -215,6 +235,45 @@ button {
   line-height: 1.85;
 }
 
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  /* the hero body ignores clicks so bottle hotspots stay reachable;
+     the actions themselves opt back in */
+  pointer-events: auto;
+}
+
+.btn-solid {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--amber);
+  border-radius: 2px;
+  padding: 11px 18px;
+  white-space: nowrap;
+  transition: background var(--t-hover), transform var(--t-fast);
+}
+
+.btn-solid:hover {
+  background: #d9bd96;
+}
+
+.btn-solid:active {
+  transform: scale(0.98);
+}
+
+.hero-hint {
+  font-size: 11px;
+  font-style: italic;
+  font-family: var(--serif);
+  letter-spacing: 0.04em;
+  color: var(--t3);
+  white-space: nowrap;
+}
+
 .hint {
   position: fixed;
   right: 36px;
@@ -255,7 +314,7 @@ button {
   color: var(--t2);
   padding: 9px 16px;
   border-radius: 2px;
-  transition: color 0.25s, background 0.25s;
+  transition: color var(--t-hover), background var(--t-hover);
 }
 
 .dock-item:hover {
@@ -265,13 +324,6 @@ button {
 .dock-item.active {
   color: var(--text);
   background: rgba(200, 169, 126, 0.1);
-}
-
-.dock-n {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--amber);
 }
 
 /* ─── persistent contact card ─────────────────────────────────────── */
@@ -320,7 +372,7 @@ button {
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--t2);
-  transition: color 0.25s, border-color 0.25s, background 0.25s;
+  transition: color var(--t-hover), border-color var(--t-hover), background var(--t-hover);
 }
 
 .contact-link:hover {
@@ -396,7 +448,7 @@ button {
   border: 1px solid var(--amber);
   background: rgba(200, 169, 126, 0.25);
   flex-shrink: 0;
-  transition: background 0.25s;
+  transition: background var(--t-hover);
 }
 
 .anno:hover .anno-dot {
@@ -432,7 +484,7 @@ button {
   background: rgba(12, 8, 5, 0.42);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  transition: color 0.25s, border-color 0.25s, background 0.25s;
+  transition: color var(--t-hover), border-color var(--t-hover), background var(--t-hover);
 }
 
 .anno:hover .anno-tag {
@@ -441,13 +493,6 @@ button {
   background: rgba(200, 169, 126, 0.1);
 }
 
-.anno-tag b {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 12px;
-  color: var(--amber);
-}
 
 /* ─── content panel ───────────────────────────────────────────────── */
 .panel {
@@ -510,7 +555,7 @@ button {
   color: var(--t2);
   padding: 6px;
   z-index: 2;
-  transition: color 0.2s;
+  transition: color var(--t-hover);
 }
 
 .panel-close:hover {
@@ -596,21 +641,43 @@ button {
   color: var(--t3);
 }
 
-.tags {
+/* ─── capability index (typographic, no badge walls) ──────────────── */
+.skills {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 12px;
+  flex-direction: column;
+  gap: 13px;
 }
 
-.tags span {
+.skills-row dt {
   font-size: 10px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 2px;
+}
+
+.skills-row dd {
+  font-size: 12.5px;
+  font-weight: 300;
   color: var(--t2);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 3px 9px;
+  line-height: 1.7;
+}
+
+.course-line {
+  padding: 2px 0 20px;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--t2);
+  line-height: 1.7;
+}
+
+.course-line span {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 2px;
 }
 
 .certs li,
@@ -664,7 +731,7 @@ button {
   justify-content: space-between;
   gap: 14px;
   font-size: 12.5px;
-  transition: color 0.2s;
+  transition: color var(--t-hover);
 }
 
 .links a:hover {
@@ -693,7 +760,7 @@ button {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text);
-  transition: border-color 0.25s, background 0.25s, color 0.25s, transform 0.12s;
+  transition: border-color var(--t-hover), background var(--t-hover), color var(--t-hover), transform var(--t-fast);
 }
 
 .like-btn:hover:not(:disabled) {
@@ -714,7 +781,7 @@ button {
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: fill 0.25s, transform 0.25s;
+  transition: fill var(--t-hover), transform var(--t-hover);
 }
 
 .like-btn[data-liked='true'] {
@@ -756,7 +823,7 @@ button {
   left: 50%;
   bottom: 96px;
   transform: translateX(-50%) translateY(28px);
-  width: min(1080px, calc(100vw - 64px));
+  width: min(820px, calc(100vw - 64px));
   max-height: 74vh;
   display: flex;
   flex-direction: column;
@@ -804,54 +871,63 @@ button {
   color: var(--amber);
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+.projects-scroll {
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 6px;
   scrollbar-width: thin;
   scrollbar-color: var(--t3) transparent;
 }
 
-.proj-card {
-  display: flex;
-  flex-direction: column;
-  padding: 18px 18px 16px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: rgba(200, 169, 126, 0.02);
-  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+/* Editorial rows: hairline between entries, evidence in prose. */
+.proj-row {
+  display: block;
+  padding: 20px 2px;
+  border-top: 1px solid var(--border);
+  transition: background var(--t-hover);
 }
 
-.proj-card:hover {
-  border-color: var(--amber);
-  background: rgba(200, 169, 126, 0.06);
-  transform: translateY(-3px);
+.proj-row.linked:hover,
+.proj-row.linked:focus-visible {
+  background: rgba(200, 169, 126, 0.05);
 }
 
-.proj-top {
+.proj-line {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
 }
 
-.proj-top h3 {
+.proj-line h3 {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 20px;
+  font-size: 21px;
   letter-spacing: 0.01em;
+  /* "A11ySentry" needs full-height figures; Cormorant's default numerals
+     read as lowercase letters at this size */
+  font-variant-numeric: lining-nums;
+  font-feature-settings: 'lnum' 1;
+}
+
+.proj-status {
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 3px 9px;
 }
 
 .proj-arrow {
   color: var(--amber);
   font-size: 14px;
   opacity: 0.6;
-  transition: opacity 0.25s, transform 0.25s;
+  transition: opacity var(--t-hover), transform var(--t-hover);
 }
 
-.proj-card:hover .proj-arrow {
+.proj-row.linked:hover .proj-arrow {
   opacity: 1;
   transform: translate(2px, -2px);
 }
@@ -861,32 +937,68 @@ button {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--amber);
-  margin: 4px 0 10px;
+  margin: 3px 0 8px;
 }
 
 .proj-desc {
+  max-width: 76ch;
   font-size: 12.5px;
   font-weight: 300;
   color: var(--t2);
   line-height: 1.7;
-  margin-bottom: 14px;
-  flex-grow: 1;
+  margin-bottom: 6px;
 }
 
-.proj-stack {
+.proj-stack-line {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--t3);
+  margin-top: 4px;
+}
+
+/* Earlier work: one quiet line per project. */
+.proj-archive {
+  margin-top: 8px;
+  padding: 16px 2px 4px;
+  border-top: 1px solid var(--border);
+}
+
+.proj-archive ul {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.proj-archive a {
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 2px;
+  transition: color var(--t-hover);
 }
 
-.proj-stack span {
-  font-size: 9.5px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--t2);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 3px 7px;
+.proj-archive a:hover {
+  color: var(--amber);
+}
+
+.proj-archive a:hover .proj-arrow {
+  opacity: 1;
+}
+
+.proj-archive-name {
+  flex-shrink: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.proj-archive-tag {
+  flex: 1;
+  font-size: 11.5px;
+  font-weight: 300;
+  color: var(--t3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ─── resume modal ────────────────────────────────────────────────── */
@@ -960,7 +1072,7 @@ button {
   background: var(--amber);
   border-radius: 3px;
   padding: 11px 18px;
-  transition: background 0.25s;
+  transition: background var(--t-hover);
 }
 
 .btn-primary:hover {
@@ -973,7 +1085,7 @@ button {
   line-height: 1;
   color: var(--t2);
   padding: 0 6px;
-  transition: color 0.2s;
+  transition: color var(--t-hover);
 }
 
 .modal-x:hover {
@@ -991,6 +1103,12 @@ button {
   border: 0;
 }
 
+/* Shown only when the inline preview is hidden (small screens). */
+.modal-doc-fallback {
+  display: none;
+  padding: 28px 22px;
+}
+
 /* ─── responsive ──────────────────────────────────────────────────── */
 @media (max-width: 760px) {
   .top {
@@ -1005,11 +1123,11 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 50%;
+    height: 60%;
     background: linear-gradient(
       to top,
-      rgba(10, 6, 4, 0.95) 24%,
-      rgba(10, 6, 4, 0.55) 60%,
+      rgba(10, 6, 4, 0.97) 30%,
+      rgba(10, 6, 4, 0.6) 62%,
       transparent
     );
     z-index: 1;
@@ -1080,8 +1198,26 @@ button {
     gap: 3px;
   }
 
+  /* 44px touch targets */
   .contact-link {
-    padding: 7px;
+    padding: 14px;
+  }
+
+  .contact-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn-solid {
+    padding: 14px 20px;
+  }
+
+  .btn-ghost {
+    padding: 12px 14px;
+  }
+
+  .dock-item {
+    min-height: 44px;
   }
 
   .dock {
@@ -1095,11 +1231,6 @@ button {
     gap: 5px;
     font-size: 8.5px;
     letter-spacing: 0.04em;
-  }
-
-  /* five items is tight on a phone — drop the serif index numbers */
-  .dock-n {
-    display: none;
   }
 
   .panel {
@@ -1152,9 +1283,30 @@ button {
     font-size: 26px;
   }
 
-  .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .proj-line h3 {
+    font-size: 18px;
+  }
+
+  .proj-archive-tag {
+    display: none;
+  }
+
+  .hero-actions {
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .hero-hint {
+    display: none;
+  }
+
+  /* A cramped PDF iframe is unreadable on phones: actions only. */
+  .modal-doc iframe {
+    display: none;
+  }
+
+  .modal-doc-fallback {
+    display: block;
   }
 
   .modal-backdrop {
@@ -1179,5 +1331,19 @@ button {
 
   .btn-primary {
     padding: 9px 13px;
+  }
+}
+
+/* ─── reduced motion ──────────────────────────────────────────────────
+   Every CSS transition collapses to an instant state change. The GSAP
+   camera and the bottle's idle float check the same media query in JS. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

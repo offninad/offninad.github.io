@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { RoundedBox, MeshTransmissionMaterial } from '@react-three/drei'
+import { REDUCED_MOTION } from './motion.js'
 
 /*
  * Procedurally built flacon (no glTF): frosted-glass rounded box, amber
@@ -39,9 +40,9 @@ function drawFrontLabel(c) {
   x.font = '600 76px "Cormorant Garamond", Georgia, serif'
   x.fillText('NINAD RADE', cx, 252)
 
-  x.letterSpacing = '1px'
-  x.font = 'italic 500 30px "Cormorant Garamond", Georgia, serif'
-  x.fillText('AI Solutions Engineer', cx, 318)
+  x.letterSpacing = '0.5px'
+  x.font = 'italic 500 27px "Cormorant Garamond", Georgia, serif'
+  x.fillText('AI Integration & Solutions Engineer', cx, 318)
 
   x.fillRect(cx - 32, 384, 64, 2)
 
@@ -60,31 +61,24 @@ function drawBackLabel(c) {
   const cx = w / 2
 
   x.letterSpacing = '6px'
-  x.font = '400 20px Inter, system-ui, sans-serif'
-  x.fillText('EXPERIENCE', cx, 74)
+  x.font = '400 21px Inter, system-ui, sans-serif'
+  x.fillText('EXPERIENCE', cx, 92)
 
-  x.fillRect(cx - 32, 104, 64, 2)
-
-  x.letterSpacing = '1px'
-  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
-  x.fillText('Boon.AI', cx, 158)
-  x.letterSpacing = '0.5px'
-  x.font = '400 17px Inter, system-ui, sans-serif'
-  x.fillText('AI Solutions Engineer · 2026 – Present', cx, 190)
+  x.fillRect(cx - 32, 128, 64, 2)
 
   x.letterSpacing = '1px'
-  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
-  x.fillText('DavaNinja', cx, 250)
+  x.font = '600 36px "Cormorant Garamond", Georgia, serif'
+  x.fillText('Boon AI Inc.', cx, 196)
   x.letterSpacing = '0.5px'
   x.font = '400 17px Inter, system-ui, sans-serif'
-  x.fillText('Software Engineering Intern · 2024 – 25', cx, 282)
+  x.fillText('AI Integration & Solutions Intern · 2026', cx, 232)
 
   x.letterSpacing = '1px'
-  x.font = '600 32px "Cormorant Garamond", Georgia, serif'
-  x.fillText('AIESEC in India', cx, 342)
+  x.font = '600 36px "Cormorant Garamond", Georgia, serif'
+  x.fillText('DavaNinja Pvt. Ltd.', cx, 308)
   x.letterSpacing = '0.5px'
   x.font = '400 17px Inter, system-ui, sans-serif'
-  x.fillText('VP, Organizing Committee · 2022', cx, 374)
+  x.fillText('Software Engineering Intern · 2024 – 25', cx, 344)
   return c
 }
 
@@ -188,6 +182,7 @@ export default function Bottle({
   const plateTex = useLabelTexture(drawPlateTop)
 
   useFrame((state) => {
+    if (REDUCED_MOTION) return
     const t = state.clock.elapsedTime
     floatRef.current.position.y = Math.sin(t * 0.7) * 0.045
     floatRef.current.rotation.z = Math.sin(t * 0.4) * 0.012

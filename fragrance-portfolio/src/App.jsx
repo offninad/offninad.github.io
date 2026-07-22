@@ -5,6 +5,7 @@ import Panel from './Panel.jsx'
 import ProjectsOverlay from './ProjectsOverlay.jsx'
 import ResumeModal from './ResumeModal.jsx'
 import { LINKS, NAV } from './content.js'
+import { REDUCED_MOTION } from './motion.js'
 
 const PANEL_SECTIONS = ['experience', 'education', 'beyond']
 // Cap the pixel ratio on phones — high-DPR + a transmission FBO is brutal on
@@ -48,8 +49,9 @@ export default function App() {
   const [showResume, setShowResume] = useState(false)
 
   // Hero fly-in: after mount, glide from the sky down to the bottle.
+  // Under reduced motion the camera cuts straight to the home pose.
   useEffect(() => {
-    const t = setTimeout(() => setSection('home'), 450)
+    const t = setTimeout(() => setSection('home'), REDUCED_MOTION ? 0 : 450)
     return () => clearTimeout(t)
   }, [])
 
@@ -66,45 +68,52 @@ export default function App() {
         dpr={IS_MOBILE ? [1, 1.5] : [1, 1.8]}
         camera={{ fov: 35, position: [0, 9, 0.02], near: 0.1, far: 60 }}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+        aria-hidden="true"
       >
         <Scene section={section} setSection={setSection} onSync={setSynced} />
       </Canvas>
 
       <header className="top ui">
-        <div className="logo">
+        <div className="logo" aria-hidden="true">
           NR<span>.</span>
         </div>
         <div className="top-right">
           <span className="status">
             <span className="pill-dot" />
-            Closed to internships
+            Open to 2027 AI engineering roles
           </span>
           <button className="btn-ghost" onClick={() => setShowResume(true)}>
-            View One-Page Resume
+            Résumé
           </button>
         </div>
       </header>
 
-      <div className="hero ui" data-hide={section !== 'home'}>
-        <p className="kicker">Ninad Rade · AI Solutions Engineer @ Boon.AI</p>
+      <main className="hero ui" data-hide={section !== 'home'} aria-hidden={section !== 'home'}>
+        <p className="kicker">Ninad Rade · New York, NY</p>
         <h1>
-          If My Resume Was a <em>Fragrance Bottle</em>
+          If My Résumé Were a <em>Fragrance Bottle</em>
         </h1>
         <p className="hero-line">
-          AI Solutions Engineer at Boon.AI, building production-grade AI
-          systems — distributed data pipelines to deep learning. MS at NYU
-          Tandon, New York. Turn the bottle to explore.
+          AI Integration &amp; Solutions Engineer building dependable AI
+          systems, agent workflows, and data products. M.S. Computer
+          Engineering at NYU Tandon, GPA 3.84, May 2027.
         </p>
-      </div>
+        <div className="hero-actions">
+          <button className="btn-solid" onClick={() => setSection('projects')}>
+            View selected work
+          </button>
+          <span className="hero-hint">or turn the bottle to explore</span>
+        </div>
+      </main>
 
       <nav className="dock ui" aria-label="Sections">
         {NAV.map((item) => (
           <button
             key={item.id}
             className={`dock-item${activeId === item.id ? ' active' : ''}`}
+            aria-current={activeId === item.id ? 'true' : undefined}
             onClick={() => setSection(item.id)}
           >
-            <span className="dock-n">{item.n}</span>
             {item.label}
           </button>
         ))}

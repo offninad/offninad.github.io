@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import gsap from 'gsap'
+import { REDUCED_MOTION } from './motion.js'
 
 /*
  * Camera = OrbitControls (free drag/zoom anytime) + GSAP.
@@ -29,9 +30,9 @@ function poseFor(section, mobile) {
   const v = POSES[section] ?? POSES.home
   if (!mobile || section === 'intro') return v
   // Portrait home: ride the bottle high in the frame (aim below it) so the
-  // hero text + dock have clear room in the lower third.
+  // hero copy, CTA, and dock have clear room in the lower half.
   if (section === 'home') {
-    return { pos: [0, 1.35, 8.0], tgt: [0, -0.7, 0] }
+    return { pos: [0, 1.5, 8.3], tgt: [0, -0.82, 0] }
   }
   // Other sections: pull back and lift framing so the bottom sheet doesn't
   // cover the focal point.
@@ -72,7 +73,8 @@ export default function CameraRig({ section, onSync }) {
     const pose = poseFor(section, mobile)
     const end = sphericalOf(pose)
     const isFlyIn = section === 'home' && camera.position.y > 6
-    const duration = isFlyIn ? 2.6 : 1.6
+    // Reduced motion: cut to the pose instead of flying there.
+    const duration = REDUCED_MOTION ? 0.001 : isFlyIn ? 2.6 : 1.6
     const ease = isFlyIn ? 'power4.inOut' : 'power3.inOut'
 
     // Start from wherever the orbit currently is.
